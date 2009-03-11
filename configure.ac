@@ -7,6 +7,7 @@ AC_LANG_C
 AC_PROG_CC
 AM_PROG_LIBTOOL
 
+PKG_CHECK_MODULES(FREETYPE,[freetype2])
 PKG_CHECK_MODULES(ECORE,[ecore])
 PKG_CHECK_MODULES(ECORE_FILE,[ecore-file])
 PKG_CHECK_MODULES(ECORE_EVAS,[ecore-evas])
@@ -14,4 +15,4 @@ PKG_CHECK_MODULES(EVAS,[evas])
 PKG_CHECK_MODULES(EDJE,[edje])
 PKG_CHECK_MODULES(EWL, [ewl])
 
-AC_OUTPUT(Makefile src/Makefile src/puzzles/Makefile)
+AC_OUTPUT(Makefile src/Makefile)
