@@ -94,12 +94,13 @@ __drawable_free_context(DrawableContext * ctx)
         drawable_free_font(ctx->font);
         ctx->font = NULL;
      }
+#if 0
    if (ctx->color_modifier)
      {
         drawable_free_color_modifier(ctx->color_modifier);
         ctx->color_modifier = NULL;
      }
-
+#endif
    free(ctx);
 }
 
@@ -332,6 +333,7 @@ drawable_context_get_blend(Drawable_Context context)
    return ctx->blend;
 }
 
+#if 0
 /**
  * @param color_modifier Current color modifier.
  * 
@@ -361,6 +363,7 @@ drawable_context_get_color_modifier(Drawable_Context context)
    DrawableContext *ctx = (DrawableContext *) context;
    return ctx->color_modifier;
 }
+#endif 
 
 /**
  * @param operation 
@@ -1734,7 +1737,7 @@ drawable_free_font(Drawable_Context context)
 {
    DrawableContext *ctx = (DrawableContext *) context;
    CHECK_PARAM_POINTER("drawable_free_font", "font", ctx->font);
-   drawable_remove_font_from_fallback_chain(ctx->font);
+//   drawable_remove_font_from_fallback_chain(ctx->font);
    drawable_font_free(ctx->font);
    ctx->font = NULL;
 }
@@ -2027,6 +2030,7 @@ drawable_get_text_inset(Drawable_Context context, const char *text)
    return drawable_font_query_inset(fn, text);
 }
 
+#if 0
 /**
  * @param path A directory path.
  * 
@@ -2072,6 +2076,7 @@ drawable_list_font_path(int *number_return)
                               number_return, NULL);
    return drawable_font_list_font_path(number_return);
 }
+#endif
 
 /**
  * @param text A string.
@@ -2276,6 +2281,7 @@ drawable_text_get_location_at_index(Drawable_Context context, const char *text, 
      }
 }
 
+#if 0
 /**
  * @param number_return Number of fonts in the list.
  * @return A list of fonts.
@@ -2303,6 +2309,7 @@ drawable_free_font_list(char **font_list, int number)
 {
    __drawable_FileFreeDirList(font_list, number);
 }
+#endif
 
 /**
  * @return The font cache size.
