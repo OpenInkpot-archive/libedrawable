@@ -8,7 +8,7 @@
 #define EWL_DRAWABLE(ed) ((Ewl_Drawable *) ed)
 
 struct _Ewl_Drawable {
-    Ewl_Image image;
+    Ewl_Image superclass;
     Drawable_Context * context;
 };
 typedef struct _Ewl_Drawable Ewl_Drawable;

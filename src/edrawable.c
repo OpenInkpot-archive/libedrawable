@@ -29,13 +29,23 @@ ewl_drawable_configure(Ewl_Drawable *e) {
     DATA32 *data;
     Drawable_Image di;
 
+    Ewl_Widget *wi = EWL_WIDGET(e);
     image = EWL_IMAGE(e)->image;
-    evas_object_image_filled_set(image, 1);
+//        if (wi->fx_clip_box)
+//                        evas_object_stack_below(image, wi->fx_clip_box);
+
+//          if (wi->fx_clip_box)
+//                     evas_object_clip_set(image, wi->fx_clip_box);
+    evas_object_pass_events_set(image, TRUE);
+                                                
+    evas_object_image_fill_set(image, 0, 0, CURRENT_W(e), CURRENT_H(e));
+    evas_object_image_size_set(image, CURRENT_W(e), CURRENT_H(e));
     evas_object_image_size_get(image, &w, &h);
     data = evas_object_image_data_get(image, 1);
-
+    printf("Create image: %d x %d, %d x %d\n", w, h, CURRENT_W(e), CURRENT_H(e));
     di = drawable_create_image_using_data(w, h, data);
     drawable_context_set_image(e->context, di);
+    drawable_image_set_alpha(e->context, 0);
 }
 
 
@@ -77,7 +87,7 @@ ewl_drawable_init(Ewl_Drawable *e){
     e->context = drawable_context_new();
     if(!e->context)
         return NULL;
-    ewl_drawable_configure(e);
+//    ewl_drawable_configure(e);
 
     DRETURN_PTR(e, DLEVEL_STABLE);
 }
@@ -152,6 +162,8 @@ EAPI void         ewl_drawable_reset_clip(Ewl_Drawable* e){
     ewl_drawable_set_clip(e, 0, 0, w, h);
 }
 
+
+static int saved = 1;
 EAPI void
 ewl_drawable_commit(Ewl_Drawable *e) {
     Ewl_Image *img = EWL_IMAGE(e);
@@ -162,5 +174,11 @@ ewl_drawable_commit(Ewl_Drawable *e) {
     w = drawable_image_get_width(e->context);
     h = drawable_image_get_height(e->context);
     evas_object_image_data_set(img->image, in);
+    printf("update_add(%d,%d)\n", w, h);
     evas_object_image_data_update_add(img->image, 0, 0, w, h);
+    if (saved == 0) {
+        evas_object_image_save(img->image,"test.png",NULL,NULL);
+        saved = 1;
+    }
+
 }

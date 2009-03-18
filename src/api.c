@@ -495,6 +495,7 @@ EAPI void
 drawable_context_set_color(Drawable_Context context, int red, int green, int blue, int alpha)
 {
    DrawableContext *ctx = (DrawableContext *) context;
+   printf("set color: %d %d %d %d\n",red,green,blue,alpha);
    ctx->color.red = red;
    ctx->color.green = green;
    ctx->color.blue = blue;
@@ -925,6 +926,13 @@ drawable_image_has_alpha(Drawable_Context context)
    if (IMAGE_HAS_ALPHA(im))
       return 1;
    return 0;
+}
+
+EAPI void
+drawable_image_set_alpha(Drawable_Context context, char flag) 
+{
+   DrawableContext *ctx = (DrawableContext *) context;
+    __drawable_SetImageAlphaFlag(ctx->image, flag);
 }
 
 #if 0

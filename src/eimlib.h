@@ -181,6 +181,7 @@ extern "C"
    EAPI DATA32 *drawable_image_get_data_for_reading_only(Drawable_Context context);
    EAPI void drawable_image_put_back_data(Drawable_Context context, DATA32 * data);
    EAPI void drawable_image_set_has_alpha(Drawable_Context context, char has_alpha);
+   EAPI void drawable_image_set_alpha(Drawable_Context context, char flag);
    EAPI void drawable_image_query_pixel(Drawable_Context context, int x, int y, Drawable_Color * color_return);
    EAPI void drawable_image_query_pixel_hsva(Drawable_Context context, int x, int y, float *hue, float *saturation, float *value, int *alpha);
    EAPI void drawable_image_query_pixel_hlsa(Drawable_Context context, int x, int y, float *hue, float *lightness, float *saturation, int *alpha);

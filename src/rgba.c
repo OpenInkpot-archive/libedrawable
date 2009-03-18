@@ -4995,7 +4995,7 @@ __drawable_GetRGBAFunction(int depth,
 DrawableMaskFunction
 __drawable_GetMaskFunction(char hiq)
 {
-   return hiq ? &__drawable_RGBA_to_A1_dither : &__imlib_RGBA_to_A1_fast;
+   return hiq ? &__drawable_RGBA_to_A1_dither : &__drawable_RGBA_to_A1_fast;
 }
 
 #endif
