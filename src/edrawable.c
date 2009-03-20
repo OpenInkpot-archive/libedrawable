@@ -163,7 +163,7 @@ EAPI void         ewl_drawable_reset_clip(Ewl_Drawable* e){
 }
 
 
-static int saved = 0;
+static int saved = 1;
 EAPI void
 ewl_drawable_commit(Ewl_Drawable *e) {
     Ewl_Image *img = EWL_IMAGE(e);
