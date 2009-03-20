@@ -45,7 +45,7 @@ ewl_drawable_configure(Ewl_Drawable *e) {
     printf("Create image: %d x %d, %d x %d\n", w, h, CURRENT_W(e), CURRENT_H(e));
     di = drawable_create_image_using_data(w, h, data);
     drawable_context_set_image(e->context, di);
-    drawable_image_set_alpha(e->context, 0);
+    drawable_image_set_alpha(e->context, 1);
 }
 
 
@@ -163,13 +163,14 @@ EAPI void         ewl_drawable_reset_clip(Ewl_Drawable* e){
 }
 
 
-static int saved = 1;
+static int saved = 0;
 EAPI void
 ewl_drawable_commit(Ewl_Drawable *e) {
     Ewl_Image *img = EWL_IMAGE(e);
     void *in;
     int w, h;
 
+//    ewl_drawable_draw_ellipse(e, 200, 200, 100, 100);
     in = drawable_image_get_data(e->context);
     w = drawable_image_get_width(e->context);
     h = drawable_image_get_height(e->context);
