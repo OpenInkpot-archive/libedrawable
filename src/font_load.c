@@ -23,7 +23,6 @@ static char       **fpath = NULL;
 static int          fpath_num = 0;
 static Drawable_Object_List *fonts = NULL;
 
-static DrawableFont   *drawable_font_load(const char *name, int faceidx, int size);
 static int          font_modify_cache_cb(Drawable_Hash * hash, const char *key,
                                          void *data, void *fdata);
 static int          font_flush_free_glyph_cb(Drawable_Hash * hash, const char *key,
@@ -127,7 +126,7 @@ drawable_font_load_joined(const char *fontname)
    return fn;
 }
 
-static DrawableFont   *
+EAPI Drawable_Font   *
 drawable_font_load(const char *name, int faceidx, int size)
 {
    int                 error;
@@ -146,6 +145,7 @@ drawable_font_load(const char *name, int faceidx, int size)
    error = FT_New_Face(ft_lib, file, faceidx, &(fn->ft.face));
    if (error)
      {
+        printf("Can't load FACE\n");
         free(fn);
         return NULL;
      }
@@ -181,7 +181,7 @@ drawable_font_load(const char *name, int faceidx, int size)
         error = FT_Set_Pixel_Sizes(fn->ft.face, chosen_width, chosen_size);
         if (error)
           {
-             /* couldn't choose the size anyway... what now? */
+             printf("couldn't choose the size anyway... what now?\n");
           }
      }
 

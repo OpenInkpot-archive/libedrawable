@@ -223,7 +223,8 @@ extern "C"
    EAPI void drawable_image_tile(void);
 #endif
 /* fonts and text */
-   EAPI Drawable_Font drawable_load_font(Drawable_Context context, const char *font_name);
+   EAPI Drawable_Font   *drawable_font_load(const char *name, int faceidx, int size);
+   EAPI void drawable_load_font(Drawable_Context context, const char *font_name, int face, int size);
    EAPI void drawable_free_font(Drawable_Font font);
 #if 0
    /* NB! The four functions below are deprecated. */

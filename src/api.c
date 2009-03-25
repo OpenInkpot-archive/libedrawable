@@ -1731,10 +1731,13 @@ drawable_image_tile(Drawable_Context context)
  * blum. If the font cannot be found NULL is returned. 
  * 
  **/
-EAPI                Drawable_Font
-drawable_load_font(Drawable_Context context, const char *font_name)
+EAPI    void
+drawable_load_font(Drawable_Context context, const char *font_name, int face, int size)
 {
-   return drawable_font_load_joined(font_name);
+    Drawable_Font *font;
+    font = drawable_font_load(font, face, size);
+    drawable_context_set_font(context, font);
+//   return drawable_font_load_joined(font_name);
 }
 
 /**

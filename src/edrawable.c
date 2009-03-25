@@ -142,9 +142,6 @@ ewl_drawable_draw_ellipse_filled(Ewl_Drawable* e, int x, int y, int r, int r2) {
     drawable_image_fill_ellipse(e->context, x, y, r, r2);
 }
 
-EAPI void 
-ewl_drawable_draw_text(Ewl_Drawable* e, int x, int y, int size, char *font, char*font2, char *text) {
-}
 
 EAPI void
 ewl_drawable_set_colors(Ewl_Drawable *e, Ewl_Color_Set *set) {
@@ -162,6 +159,11 @@ EAPI void         ewl_drawable_reset_clip(Ewl_Drawable* e){
     ewl_drawable_set_clip(e, 0, 0, w, h);
 }
 
+EAPI void
+ewl_drawable_draw_text(Ewl_Drawable *e, int x, int y, char *fontname, int size, char *text) {
+    drawable_load_font(e->context, fontname, 0, size);
+    drawable_text_draw(e->context, x, y, text);
+}
 
 static int saved = 1;
 EAPI void
