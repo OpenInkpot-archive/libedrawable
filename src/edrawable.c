@@ -161,7 +161,9 @@ EAPI void         ewl_drawable_reset_clip(Ewl_Drawable* e){
 
 EAPI void
 ewl_drawable_draw_text(Ewl_Drawable *e, int x, int y, char *fontname, int size, char *text) {
+    printf("load fond...\n");
     drawable_load_font(e->context, fontname, 0, size);
+    printf("draw...\n");
     drawable_text_draw(e->context, x, y, text);
 }
 

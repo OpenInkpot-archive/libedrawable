@@ -1735,7 +1735,7 @@ EAPI    void
 drawable_load_font(Drawable_Context context, const char *font_name, int face, int size)
 {
     Drawable_Font *font;
-    font = drawable_font_load(font, face, size);
+    font = drawable_font_load(font_name, face, size);
     drawable_context_set_font(context, font);
 //   return drawable_font_load_joined(font_name);
 }
@@ -1880,7 +1880,8 @@ drawable_text_draw_with_return_metrics(Drawable_Context context, int x, int y, c
    dir = ctx->direction;
    if (ctx->direction == DRAWABLE_TEXT_TO_ANGLE && ctx->angle == 0.0)
       dir = DRAWABLE_TEXT_TO_RIGHT;
-
+    
+    printf("here..\n");
    drawable_render_str(im, fn, x, y, text, (DATA8) ctx->color.red,
                     (DATA8) ctx->color.green, (DATA8) ctx->color.blue,
                     (DATA8) ctx->color.alpha, (char)dir,

@@ -134,18 +134,24 @@ drawable_font_load(const char *name, int faceidx, int size)
    char               *file;
 
    fn = drawable_font_find(name, size);
-   if (fn)
+   if (fn){
+      printf("font %s %d already loaded\n",name, size);
       return fn;
+   }
 
    drawable_font_init();
 
    fn = malloc(sizeof(DrawableFont));
    file = (char *)name;
 
+   if(__drawable_FileIsFile(file)) {
+        printf("font file exists\n");
+   }
+
    error = FT_New_Face(ft_lib, file, faceidx, &(fn->ft.face));
    if (error)
      {
-        printf("Can't load FACE\n");
+        printf("Can't load FACE %s %d\n", file, faceidx);
         free(fn);
         return NULL;
      }
