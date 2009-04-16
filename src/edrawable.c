@@ -160,11 +160,30 @@ EAPI void         ewl_drawable_reset_clip(Ewl_Drawable* e){
 }
 
 EAPI void
-ewl_drawable_draw_text(Ewl_Drawable *e, int x, int y, char *fontname, int size, char *text) {
-    printf("load fond...\n");
+ewl_drawable_select_font(Ewl_Drawable *e, char *fontname, int size) {
+    printf("load font...\n");
     drawable_load_font(e->context, fontname, 0, size);
+}
+
+EAPI void
+ewl_drawable_draw_text(Ewl_Drawable *e, int x, int y, char *text) {
     printf("draw...\n");
     drawable_text_draw(e->context, x, y, text);
+}
+
+EAPI void
+ewl_drawable_get_text_size(Ewl_Drawable* e, char *text, int *vertical, int *horisontal) {
+    drawable_get_text_size(e->context, text, horisontal, vertical); 
+}
+
+EAPI int
+ewl_drawable_get_font_ascent(Ewl_Drawable* e) {
+    drawable_get_maximum_font_ascent(e->context);
+}
+
+EAPI int
+ewl_drawable_get_font_descent(Ewl_Drawable* e) {
+    drawable_get_maximum_font_descent(e->context);
 }
 
 static int saved = 1;
@@ -185,5 +204,5 @@ ewl_drawable_commit(Ewl_Drawable *e) {
         evas_object_image_save(img->image,"test.png",NULL,NULL);
         saved = 1;
     }
-
 }
+

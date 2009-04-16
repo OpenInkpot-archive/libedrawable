@@ -33,7 +33,16 @@ EAPI void         ewl_drawable_polygon_add(EDrawablePolygon, int, int);
 EAPI void         ewl_drawable_draw_ellipse(Ewl_Drawable* , int x, int y, int r, int r2);
 EAPI void         ewl_drawable_draw_ellipse_filled(Ewl_Drawable*, int x, int y, int r, int r2);
 
-EAPI void         ewl_drawable_draw_text(Ewl_Drawable*, int x, int y, char *fontname, int size, char *text);
+EAPI int
+ewl_drawable_get_font_ascent(Ewl_Drawable* e);
+EAPI int
+ewl_drawable_get_font_descent(Ewl_Drawable* e);
+
+EAPI void
+ewl_drawable_select_font(Ewl_Drawable *e, char *fontname, int size);
+EAPI void         ewl_drawable_draw_text(Ewl_Drawable*, int x, int y, char *text);
+
+EAPI void         ewl_drawable_get_text_size(Ewl_Drawable*, char *text, int *horisontal, int *vertical);
 
 EAPI void         ewl_drawable_set_clip(Ewl_Drawable*, int, int, int, int);
 EAPI void         ewl_drawable_reset_clip(Ewl_Drawable*);
