@@ -1,3 +1,4 @@
+#include <Evas.h>
 #include "common.h"
 #include "updates.h"
 
@@ -169,6 +170,34 @@ __drawable_FreeUpdates(DrawableUpdate * u)
         free(u);
      }
 }
+
+
+DrawableUpdate *
+__drawable_AppendUpdates(DrawableUpdate * first, DrawableUpdate *second) {
+    DrawableUpdate *uu;
+    uu = first;
+    while (uu) {
+        uu = uu->next;
+    }
+    uu->next = second;
+    return first;
+}
+
+void
+__drawable_PropagateUpdates(DrawableUpdate * u, Evas_Object *image)
+{
+   DrawableUpdate        *uu;
+
+   uu = u;
+   while (uu)
+     {
+        evas_object_image_data_update_add(image, u->x, u->y, u->w, u->h);
+        u = uu;
+        uu = uu->next;
+        free(u);
+     }
+}
+
 
 DrawableUpdate        *
 __drawable_DupUpdates(DrawableUpdate * u)

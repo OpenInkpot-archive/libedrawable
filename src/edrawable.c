@@ -84,6 +84,7 @@ ewl_drawable_init(Ewl_Drawable *e){
             EWL_CALLBACK_DESTROY, ewl_drawable_cb_destroy, NULL);
     ewl_callback_append(EWL_WIDGET(e), EWL_CALLBACK_CONFIGURE,
             ewl_drawable_cb_configure, NULL);
+    e->updates = NULL;
     e->context = drawable_context_new();
     if(!e->context)
         return NULL;
@@ -94,17 +95,21 @@ ewl_drawable_init(Ewl_Drawable *e){
 
 EAPI void
 ewl_drawable_draw_line(Ewl_Drawable *e, int x1, int y1, int x2, int y2) {
-    drawable_image_draw_line(e->context, x1, y1, x2, y2, 0);
+    e->updates = __drawable_AppendUpdates(
+        drawable_image_draw_line(e->context, x1, y1, x2, y2, 1),
+        e->updates);
 }
 
 EAPI void
 ewl_drawable_draw_rectangle(Ewl_Drawable *e, int x1, int y1, int x2, int y2) {
     drawable_image_draw_rectangle(e->context, x1, y1, x2, y2);
+    e->updates = drawable_update_append_rect(e->updates, x1, y1, x1, y2);
 }
 
 EAPI void
 ewl_drawable_draw_rectangle_fill(Ewl_Drawable *e, int x1, int y1, int x2, int y2) {
     drawable_image_fill_rectangle(e->context, x1, y1, x2, y2);
+    e->updates = drawable_update_append_rect(e->updates, x1, y1, x1, y2);
 }
 
 EAPI EDrawablePolygon  
@@ -114,12 +119,18 @@ ewl_drawable_polygon_new() {
 
 EAPI void
 ewl_drawable_draw_polygon(Ewl_Drawable *e, EDrawablePolygon p) {
+    int x, y, w, h;
     drawable_image_draw_polygon(e->context, p, 0);
+    drawable_polygon_get_bounds(p, &x, &y, &w, &h);
+    e->updates = drawable_update_append_rect(e->updates, x, y, w, h);
 }
 
 EAPI void
 ewl_drawable_draw_polygon_fill(Ewl_Drawable *e, EDrawablePolygon  p) {
+    int x, y, w, h;
     drawable_image_fill_polygon(e->context, p);
+    drawable_polygon_get_bounds(p, &x, &y, &w, &h);
+    e->updates = drawable_update_append_rect(e->updates, x, y, w, h);
 }
 
 EAPI void
@@ -132,14 +143,26 @@ ewl_drawable_polygon_add(EDrawablePolygon p, int x, int y) {
     drawable_polygon_add_point(p, x, y);
 }
 
+static void
+_update_ellipse(Ewl_Drawable *e, int x, int y, int r1, int r2) {
+    int w, h;
+    w = x + r1;
+    h = w + r2;
+    x -= r1;
+    y -= r2;
+    e->updates = drawable_update_append_rect(e->updates, x, y, w, h);
+}
+
 EAPI void
 ewl_drawable_draw_ellipse(Ewl_Drawable* e, int x, int y, int r, int r2) {
     drawable_image_draw_ellipse(e->context, x, y, r, r2);
+    _update_ellipse(e, x, y, r, r2);
 }
 
 EAPI void
 ewl_drawable_draw_ellipse_filled(Ewl_Drawable* e, int x, int y, int r, int r2) {
     drawable_image_fill_ellipse(e->context, x, y, r, r2);
+    _update_ellipse(e, x, y, r, r2);
 }
 
 
@@ -186,23 +209,18 @@ ewl_drawable_get_font_descent(Ewl_Drawable* e) {
     drawable_get_maximum_font_descent(e->context);
 }
 
-static int saved = 1;
 EAPI void
 ewl_drawable_commit(Ewl_Drawable *e) {
     Ewl_Image *img = EWL_IMAGE(e);
     void *in;
     int w, h;
 
-//    ewl_drawable_draw_ellipse(e, 200, 200, 100, 100);
     in = drawable_image_get_data(e->context);
     w = drawable_image_get_width(e->context);
     h = drawable_image_get_height(e->context);
-    evas_object_image_data_set(img->image, in);
-    printf("update_add(%d,%d)\n", w, h);
+//    evas_object_image_data_set(img->image, in);
+    __drawable_PropagateUpdates(e->updates, img->image);
+    e->updates=NULL;
     evas_object_image_data_update_add(img->image, 0, 0, w, h);
-    if (saved == 0) {
-        evas_object_image_save(img->image,"test.png",NULL,NULL);
-        saved = 1;
-    }
 }
 

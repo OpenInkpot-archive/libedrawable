@@ -10,7 +10,9 @@
 struct _Ewl_Drawable {
     Ewl_Image superclass;
     Drawable_Context * context;
+    Drawable_Updates *updates;
 };
+
 typedef struct _Ewl_Drawable Ewl_Drawable;
 typedef void * EDrawablePolygon;
 
