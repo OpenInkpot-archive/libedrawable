@@ -176,7 +176,7 @@ DrawableUpdate *
 __drawable_AppendUpdates(DrawableUpdate * first, DrawableUpdate *second) {
     DrawableUpdate *uu;
     uu = first;
-    while (uu) {
+    while (uu->next) {
         uu = uu->next;
     }
     uu->next = second;
