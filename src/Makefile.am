@@ -5,3 +5,12 @@ libedrawable_la_SOURCES = edrawable.c api.c blend.c scale.c rgba.c rgbadraw.c \
 	image.c polygon.c ellipse.c line.c updates.c rectangle.c color_helpers.c \
 	rotate.c span.c font_draw.c font_load.c font_main.c font_query.c file.c
 libedrawable_la_LIBS = @FREETYPE_LIBS@ @EWL_LIBS@
+
+EDRAWABLEHEADERS = \
+    edrawable.h \
+    eimlib.h 
+
+
+installed_headersdir = $(prefix)/include/ewl
+installed_headers_DATA = $(EDRAWABLEHEADERS)
+

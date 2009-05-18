@@ -11,3 +11,5 @@ echo "Running autoconf..." ; autoconf || exit 1
 echo "Running libtoolize..." ; (libtoolize --copy --automake || glibtoolize --automake) || exit 1
 echo "Running automake..." ; automake --add-missing --copy --foreign || exit 1
 
+chmod +x ./configure
+exec ./configure $@
