@@ -1,7 +1,7 @@
 AC_INIT(configure.ac)
 
 AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE(epuzzle, 0.1)
+AM_INIT_AUTOMAKE(edrawable, 0.1)
 
 AC_LANG_C
 AC_PROG_CC
@@ -15,4 +15,4 @@ PKG_CHECK_MODULES(EVAS,[evas])
 PKG_CHECK_MODULES(EDJE,[edje])
 PKG_CHECK_MODULES(EWL, [ewl])
 
-AC_OUTPUT(Makefile src/Makefile)
+AC_OUTPUT(Makefile edrawable.pc src/Makefile)
