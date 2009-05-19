@@ -3,9 +3,9 @@ exec_prefix=@exec_prefix@
 libdir=@libdir@
 includedir=@includedir@
 
-Name: ewl
+Name: edrawable
 Description: Edrawable -- hacked imlib2 version
-Requires: @requirements@
+Requires: ewl evas freetype2
 Version: @VERSION@
 Libs: -L${libdir} -ledrawable
 Cflags: -I${includedir}/edrawable
