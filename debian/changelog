@@ -1,3 +1,9 @@
+edrawable (0.1+20090518-2) asimov; urgency=low
+
+  * Bump revision for signing
+
+ -- Alexander V. Nikolaev <avn@daemon.hole.ru>  Mon, 25 May 2009 17:14:58 +0300
+
 edrawable (0.1+20090518-1) asimov; urgency=low
 
   * Inirial version
