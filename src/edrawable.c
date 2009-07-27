@@ -1,226 +1,276 @@
+#include <stdio.h>
+#include <Evas.h>
 #include "edrawable.h"
-#include "ewl_debug.h"
-#include "ewl_macros.h"
+#include "eimlib.h"
 
-Ewl_Drawable *
-ewl_drawable_init(Ewl_Drawable *e);
+static void
+_edrawable_add(Evas_Object *obj) {
+    EDrawable *drawable;
+    drawable = calloc(1, sizeof(EDrawable));
+    evas_object_smart_data_set(obj, drawable);
+}
 
-EAPI Ewl_Drawable *
-ewl_drawable_new() {
-    Ewl_Drawable *drawable;
+static void
+_edrawable_del(Evas_Object *obj) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    if(drawable) {
+        if(drawable->context)
+            drawable_context_free(drawable->context);
+        if(drawable->clip)
+            evas_object_del(drawable->clip);
+        if(drawable->updates)
+            __drawable_FreeUpdates(drawable->updates);
+        free(drawable);
+    }
+}
 
-    DENTER_FUNCTION(DLEVEL_STABLE);
+static void
+_edrawable_init(Evas_Object *obj, Evas *evas, int w, int h) {
 
-    drawable = NEW(Ewl_Drawable, 1);
-    if (!drawable)
-        DRETURN_PTR(NULL, DLEVEL_STABLE);
-    if (!ewl_drawable_init(drawable)) {
-        ewl_widget_destroy(EWL_WIDGET(drawable));
-        drawable = NULL;
+    EDrawable *drawable  = evas_object_smart_data_get(obj);
+    if(!drawable) {
+        printf("Can't initialize\n");
+        return;
     }
 
-    DRETURN_PTR(drawable, DLEVEL_STABLE);
+    drawable->clip = evas_object_rectangle_add(evas);
+    evas_object_smart_member_add(drawable->clip, obj);
+
+    drawable->image = evas_object_image_add(evas);
+    evas_object_pass_events_set(drawable->image, TRUE);
+    evas_object_image_size_set(drawable->image, w, h);
+    evas_object_image_fill_set(drawable->image, 0, 0, w, h);
+
+    evas_object_stack_above(drawable->image, drawable->clip);
+    evas_object_clip_set(drawable->image, drawable->clip);
+
+    drawable->updates = NULL;
+    drawable->context = drawable_context_new();
+
+    void * data = evas_object_image_data_get(drawable->image, 1);
+    printf("Create image: %d x %d\n", w, h);
+    Drawable_Image di = drawable_create_image_using_data(w, h, data);
+    drawable_context_set_image(drawable->context, di);
+    drawable_image_set_alpha(drawable->context, 1);
+
 }
 
-EAPI void
-ewl_drawable_configure(Ewl_Drawable *e) {
-    Evas_Object * image;
-    int h, w;
-    DATA32 *data;
-    Drawable_Image di;
+static void
+_edrawable_show(Evas_Object *obj) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    evas_object_show(drawable->clip);
+    evas_object_show(drawable->image);
+}
 
-    Ewl_Widget *wi = EWL_WIDGET(e);
-    image = EWL_IMAGE(e)->image;
-//        if (wi->fx_clip_box)
-//                        evas_object_stack_below(image, wi->fx_clip_box);
+static void
+_edrawable_hide(Evas_Object *obj) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    evas_object_hide(drawable->clip);
+    evas_object_hide(drawable->image);
+}
 
-//          if (wi->fx_clip_box)
-//                     evas_object_clip_set(image, wi->fx_clip_box);
-    evas_object_pass_events_set(image, TRUE);
-                                                
-    evas_object_image_fill_set(image, 0, 0, CURRENT_W(e), CURRENT_H(e));
-    evas_object_image_size_set(image, CURRENT_W(e), CURRENT_H(e));
-    evas_object_image_size_get(image, &w, &h);
-    data = evas_object_image_data_get(image, 1);
-    printf("Create image: %d x %d, %d x %d\n", w, h, CURRENT_W(e), CURRENT_H(e));
-    di = drawable_create_image_using_data(w, h, data);
-    drawable_context_set_image(e->context, di);
-    drawable_image_set_alpha(e->context, 1);
+static void
+_edrawable_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    evas_object_move(drawable->clip, x, y);
+    evas_object_move(drawable->image, x, y);
 }
 
 
 static void
-ewl_drawable_cb_configure(Ewl_Widget *w, void *ev_data, void *user_data) {
-    ewl_drawable_configure(EWL_DRAWABLE(w));
+_edrawable_resize(Evas_Object *obj, Evas_Coord x, Evas_Coord y) {
+    printf("Resize called\n");
 }
 
 static void
-ewl_drawable_cb_destroy(Ewl_Widget *w, void *ev_data /*__UNUSED__ */,
-                                          void *user_data /*__UNUSED__ */)
-{
-        Ewl_Drawable *e;
+_edrawable_clip_set(Evas_Object *obj, Evas_Object *clip) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    evas_object_clip_set(drawable->clip, clip);
+}
 
-        DENTER_FUNCTION(DLEVEL_STABLE);
-        DCHECK_PARAM_PTR(w);
-//        DCHECK_TYPE(w, EWL_IMAGE_TYPE);
+static void
+_edrawable_clip_unset(Evas_Object *obj) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    evas_object_clip_unset(drawable->clip);
+}
 
-        e = EWL_DRAWABLE(w);
-        if(e->context)
-            drawable_context_free(e->context);
+static Evas_Smart * _edrawable_smart_get() {
+    static Evas_Smart * smart = NULL;
+    static Evas_Smart_Class klass = {
+        .name = "edrawable",
+        .version = EVAS_SMART_CLASS_VERSION,
+        .add = _edrawable_add,
+        .del =  _edrawable_del,
+        .move = _edrawable_move,
+        .resize = _edrawable_resize,
+        .show = _edrawable_show,
+        .hide = _edrawable_hide,
+        .color_set = NULL,
+        .clip_set = _edrawable_clip_set,
+        .clip_unset = _edrawable_clip_unset,
+        .calculate = NULL,
+        .member_add = NULL,
+        .member_del = NULL
+    };
 
+    if(!smart)
+        smart = evas_smart_class_new(&klass);
+    return smart;
+}
 
-        DLEAVE_FUNCTION(DLEVEL_STABLE);
+Evas_Object *
+edrawable_add(Evas *evas, int w, int h) {
+    Evas_Object *obj =  evas_object_smart_add(evas, _edrawable_smart_get());
+    EDrawable *drawable  = evas_object_smart_data_get(obj);
+    if(drawable)
+        _edrawable_init(obj, evas, w, h);
+    return obj;
 }
 
 
-Ewl_Drawable *
-ewl_drawable_init(Ewl_Drawable *e){
-    Ewl_Image * i;
-    
-    i = EWL_IMAGE(e);
-    if(!ewl_image_init(i))
-        return NULL;
-    ewl_callback_prepend(EWL_WIDGET(e),
-            EWL_CALLBACK_DESTROY, ewl_drawable_cb_destroy, NULL);
-    ewl_callback_append(EWL_WIDGET(e), EWL_CALLBACK_CONFIGURE,
-            ewl_drawable_cb_configure, NULL);
-    e->updates = NULL;
-    e->context = drawable_context_new();
-    if(!e->context)
-        return NULL;
-//    ewl_drawable_configure(e);
-
-    DRETURN_PTR(e, DLEVEL_STABLE);
+void
+edrawable_draw_line(Evas_Object *obj, int x1, int y1, int x2, int y2) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable->updates = __drawable_AppendUpdates(
+        drawable_image_draw_line(drawable->context, x1, y1, x2, y2, 1),
+        drawable->updates);
 }
 
-EAPI void
-ewl_drawable_draw_line(Ewl_Drawable *e, int x1, int y1, int x2, int y2) {
-    e->updates = __drawable_AppendUpdates(
-        drawable_image_draw_line(e->context, x1, y1, x2, y2, 1),
-        e->updates);
+void
+edrawable_draw_rectangle(Evas_Object *obj, int x1, int y1, int x2, int y2) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_image_draw_rectangle(drawable->context, x1, y1, x2, y2);
+    drawable->updates = drawable_update_append_rect(drawable->updates, x1, y1, x1, y2);
 }
 
-EAPI void
-ewl_drawable_draw_rectangle(Ewl_Drawable *e, int x1, int y1, int x2, int y2) {
-    drawable_image_draw_rectangle(e->context, x1, y1, x2, y2);
-    e->updates = drawable_update_append_rect(e->updates, x1, y1, x1, y2);
+void
+edrawable_draw_rectangle_fill(Evas_Object *obj, int x1, int y1, int x2, int y2) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_image_fill_rectangle(drawable->context, x1, y1, x2, y2);
+    drawable->updates = drawable_update_append_rect(drawable->updates, x1, y1, x1, y2);
 }
 
-EAPI void
-ewl_drawable_draw_rectangle_fill(Ewl_Drawable *e, int x1, int y1, int x2, int y2) {
-    drawable_image_fill_rectangle(e->context, x1, y1, x2, y2);
-    e->updates = drawable_update_append_rect(e->updates, x1, y1, x1, y2);
-}
-
-EAPI EDrawablePolygon  
+EAPI EDrawablePolygon
 ewl_drawable_polygon_new() {
     return (EDrawablePolygon *) drawable_polygon_new();
 }
 
-EAPI void
-ewl_drawable_draw_polygon(Ewl_Drawable *e, EDrawablePolygon p) {
+void
+edrawable_draw_polygon(Evas_Object *obj, EDrawablePolygon p) {
     int x, y, w, h;
-    drawable_image_draw_polygon(e->context, p, 0);
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_image_draw_polygon(drawable->context, p, 0);
     drawable_polygon_get_bounds(p, &x, &y, &w, &h);
-    e->updates = drawable_update_append_rect(e->updates, x, y, w, h);
+    drawable->updates = drawable_update_append_rect(drawable->updates, x, y, w, h);
+}
+
+void
+edrawable_draw_polygon_fill(Evas_Object *obj, EDrawablePolygon  p) {
+    int x, y, w, h;
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_image_fill_polygon(drawable->context, p);
+    drawable_polygon_get_bounds(p, &x, &y, &w, &h);
+    drawable->updates = drawable_update_append_rect(drawable->updates, x, y, w, h);
 }
 
 EAPI void
-ewl_drawable_draw_polygon_fill(Ewl_Drawable *e, EDrawablePolygon  p) {
-    int x, y, w, h;
-    drawable_image_fill_polygon(e->context, p);
-    drawable_polygon_get_bounds(p, &x, &y, &w, &h);
-    e->updates = drawable_update_append_rect(e->updates, x, y, w, h);
-}
-
-EAPI void
-ewl_drawable_polygon_delete(EDrawablePolygon p) {
+edrawable_polygon_delete(EDrawablePolygon p) {
     drawable_polygon_free(p);
 }
 
 EAPI void
-ewl_drawable_polygon_add(EDrawablePolygon p, int x, int y) {
+edrawable_polygon_add(EDrawablePolygon p, int x, int y) {
     drawable_polygon_add_point(p, x, y);
 }
 
 static void
-_update_ellipse(Ewl_Drawable *e, int x, int y, int r1, int r2) {
+_update_ellipse(EDrawable *ed, int x, int y, int r1, int r2) {
     int w, h;
     w = x + r1;
     h = w + r2;
     x -= r1;
     y -= r2;
-    e->updates = drawable_update_append_rect(e->updates, x, y, w, h);
+    ed->updates = drawable_update_append_rect(ed->updates, x, y, w, h);
 }
 
 EAPI void
-ewl_drawable_draw_ellipse(Ewl_Drawable* e, int x, int y, int r, int r2) {
-    drawable_image_draw_ellipse(e->context, x, y, r, r2);
-    _update_ellipse(e, x, y, r, r2);
+edrawable_draw_ellipse(Evas_Object* obj, int x, int y, int r, int r2) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_image_draw_ellipse(drawable->context, x, y, r, r2);
+    _update_ellipse(drawable, x, y, r, r2);
 }
 
-EAPI void
-ewl_drawable_draw_ellipse_filled(Ewl_Drawable* e, int x, int y, int r, int r2) {
-    drawable_image_fill_ellipse(e->context, x, y, r, r2);
-    _update_ellipse(e, x, y, r, r2);
+void
+edrawable_draw_ellipse_filled(Evas_Object *obj, int x, int y, int r, int r2) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_image_fill_ellipse(drawable->context, x, y, r, r2);
+    _update_ellipse(drawable, x, y, r, r2);
 }
 
 
-EAPI void
-ewl_drawable_set_colors(Ewl_Drawable *e, Ewl_Color_Set *set) {
-    drawable_context_set_color(e->context, set->r, set->g, set->b, set->a);
+void
+edrawable_set_colors(Evas_Object *obj, int r, int g, int b, int a) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_context_set_color(drawable->context, r, g, b, a);
 }
 
-EAPI void         ewl_drawable_set_clip(Ewl_Drawable *e, int x, int y, int w, int h) {
-    drawable_context_set_cliprect(e->context, x, y, w, h);
+void
+edrawable_set_clip(Evas_Object *obj, int x, int y, int w, int h) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_context_set_cliprect(drawable->context, x, y, w, h);
 }
 
-EAPI void         ewl_drawable_reset_clip(Ewl_Drawable* e){
+void
+edrawable_reset_clip(Evas_Object *obj){
     int w, h;
-    w = drawable_image_get_width(e->context);
-    h = drawable_image_get_height(e->context);
-    ewl_drawable_set_clip(e, 0, 0, w, h);
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    w = drawable_image_get_width(drawable->context);
+    h = drawable_image_get_height(drawable->context);
+    edrawable_set_clip(obj, 0, 0, w, h);
 }
 
-EAPI void
-ewl_drawable_select_font(Ewl_Drawable *e, char *fontname, int size) {
+void
+edrawable_select_font(Evas_Object *obj, const char *fontname, int size) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
     printf("load font...\n");
-    drawable_load_font(e->context, fontname, 0, size);
+    drawable_load_font(drawable->context, fontname, 0, size);
 }
 
-EAPI void
-ewl_drawable_draw_text(Ewl_Drawable *e, int x, int y, char *text) {
+void
+edrawable_draw_text(Evas_Object *obj, int x, int y, const char *text) {
     printf("draw...\n");
-    drawable_text_draw(e->context, x, y, text);
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_text_draw(drawable->context, x, y, text);
 }
 
-EAPI void
-ewl_drawable_get_text_size(Ewl_Drawable* e, char *text, int *vertical, int *horisontal) {
-    drawable_get_text_size(e->context, text, horisontal, vertical); 
-}
-
-EAPI int
-ewl_drawable_get_font_ascent(Ewl_Drawable* e) {
-    drawable_get_maximum_font_ascent(e->context);
+void
+edrawable_get_text_size(Evas_Object *obj, const char *text, int *vertical, int *horisontal) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_get_text_size(drawable->context, text, horisontal, vertical);
 }
 
 EAPI int
-ewl_drawable_get_font_descent(Ewl_Drawable* e) {
-    drawable_get_maximum_font_descent(e->context);
+edrawable_get_font_ascent(Evas_Object *obj) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    return drawable_get_maximum_font_ascent(drawable->context);
 }
 
-EAPI void
-ewl_drawable_commit(Ewl_Drawable *e) {
-    Ewl_Image *img = EWL_IMAGE(e);
-    void *in;
-    int w, h;
+int
+edrawable_get_font_descent(Evas_Object *obj) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    return drawable_get_maximum_font_descent(drawable->context);
+}
 
-    in = drawable_image_get_data(e->context);
-    w = drawable_image_get_width(e->context);
-    h = drawable_image_get_height(e->context);
-//    evas_object_image_data_set(img->image, in);
-    __drawable_PropagateUpdates(e->updates, img->image);
-    e->updates=NULL;
-    evas_object_image_data_update_add(img->image, 0, 0, w, h);
+void
+edrawable_commit(Evas_Object *obj) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+ //   void *in;
+//    int w, h;
+
+//    w = drawable_image_get_width(e->context);
+//    h = drawable_image_get_height(e->context);
+    __drawable_PropagateUpdates(drawable->updates, drawable->image);
+    drawable->updates=NULL;
+//    evas_object_image_data_update_add(img->image, 0, 0, w, h);
 }
 

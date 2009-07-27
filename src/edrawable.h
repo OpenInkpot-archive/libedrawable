@@ -2,52 +2,76 @@
 #define _EDRAWABLE_H 1
 
 #include <Evas.h>
-#include <Ewl.h>
 #include "eimlib.h"
 
-#define EWL_DRAWABLE(ed) ((Ewl_Drawable *) ed)
-
-struct _Ewl_Drawable {
-    Ewl_Image superclass;
-    Drawable_Context * context;
-    Drawable_Updates *updates;
+struct _EDrawable {
+    Evas_Object      *clip;
+    Evas_Object      *image;
+    Drawable_Context  context;
+    Drawable_Updates  updates;
 };
 
-typedef struct _Ewl_Drawable Ewl_Drawable;
+typedef struct _EDrawable EDrawable;
 typedef void * EDrawablePolygon;
 
 
-EAPI Ewl_Drawable *  ewl_drawable_new();
-EAPI void         ewl_drawable_destroy(Ewl_Drawable *);
+extern Evas_Object *
+edrawable_add(Evas *, int w, int h);
 
-EAPI void         ewl_drawable_draw_line(Ewl_Drawable *, int x1, int y1, int x2, int y2);
+extern void
+edrawable_draw_line(Evas_Object *, int x1, int y1, int x2, int y2);
 
-EAPI void         ewl_drawable_set_colors(Ewl_Drawable *, Ewl_Color_Set *);
-EAPI void         ewl_drawable_draw_rectangle(Ewl_Drawable *, int, int, int, int);
-EAPI void         ewl_drawable_draw_rectangle_fill(Ewl_Drawable *, int, int, int, int);
+extern void
+edrawable_set_colors(Evas_Object *, int r, int g, int b, int a);
 
-EAPI EDrawablePolygon  ewl_drawable_polygon_new();
-EAPI void         ewl_drawable_draw_polygon(Ewl_Drawable *, EDrawablePolygon );
-EAPI void         ewl_drawable_draw_polygon_fill(Ewl_Drawable *, EDrawablePolygon );
-EAPI void         ewl_drawable_polygon_delete(EDrawablePolygon);
-EAPI void         ewl_drawable_polygon_add(EDrawablePolygon, int, int);
+extern void
+edrawable_draw_rectangle(Evas_Object *, int, int, int, int);
 
-EAPI void         ewl_drawable_draw_ellipse(Ewl_Drawable* , int x, int y, int r, int r2);
-EAPI void         ewl_drawable_draw_ellipse_filled(Ewl_Drawable*, int x, int y, int r, int r2);
+extern void
+edrawable_draw_rectangle_fill(Evas_Object *, int, int, int, int);
 
-EAPI int
-ewl_drawable_get_font_ascent(Ewl_Drawable* e);
-EAPI int
-ewl_drawable_get_font_descent(Ewl_Drawable* e);
+extern EDrawablePolygon
+edrawable_polygon_new();
 
-EAPI void
-ewl_drawable_select_font(Ewl_Drawable *e, char *fontname, int size);
-EAPI void         ewl_drawable_draw_text(Ewl_Drawable*, int x, int y, char *text);
+extern void
+edrawable_draw_polygon(Evas_Object *, EDrawablePolygon );
 
-EAPI void         ewl_drawable_get_text_size(Ewl_Drawable*, char *text, int *horisontal, int *vertical);
+extern void
+edrawable_draw_polygon_fill(Evas_Object *, EDrawablePolygon );
 
-EAPI void         ewl_drawable_set_clip(Ewl_Drawable*, int, int, int, int);
-EAPI void         ewl_drawable_reset_clip(Ewl_Drawable*);
+extern void
+edrawable_polygon_delete(EDrawablePolygon);
 
-EAPI void         ewl_drawable_commit(Ewl_Drawable *);
+extern void
+edrawable_polygon_add(EDrawablePolygon, int, int);
+
+extern void
+edrawable_draw_ellipse(Evas_Object * , int x, int y, int r, int r2);
+
+extern void
+edrawable_draw_ellipse_filled(Evas_Object*, int x, int y, int r, int r2);
+
+extern int
+edrawable_get_font_ascent(Evas_Object*);
+
+extern int
+edrawable_get_font_descent(Evas_Object*);
+
+extern void
+edrawable_select_font(Evas_Object *e, const char *fontname, int size);
+
+extern void
+edrawable_draw_text(Evas_Object*, int x, int y, const char *text);
+
+extern void
+edrawable_get_text_size(Evas_Object*, const char *text, int *horisontal, int *vertical);
+
+extern void
+edrawable_set_clip(Evas_Object*, int, int, int, int);
+
+extern void
+edrawable_reset_clip(Evas_Object*);
+
+extern void
+edrawable_commit(Evas_Object *);
 #endif
