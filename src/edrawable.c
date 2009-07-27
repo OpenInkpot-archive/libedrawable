@@ -2,6 +2,11 @@
 #include <Evas.h>
 #include "edrawable.h"
 #include "eimlib.h"
+#include "common.h"
+#include "updates.h"
+
+extern EAPI                Drawable_Updates
+drawable_update_append_rect(Drawable_Updates updates, int x, int y, int w, int h);
 
 static void
 _edrawable_add(Evas_Object *obj) {
