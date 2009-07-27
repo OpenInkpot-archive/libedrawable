@@ -126,7 +126,7 @@ drawable_font_load_joined(const char *fontname)
    return fn;
 }
 
-EAPI Drawable_Font   *
+EAPI DrawableFont   *
 drawable_font_load(const char *name, int faceidx, int size)
 {
    int                 error;
@@ -485,4 +485,4 @@ drawable_font_list_fonts(int *num_ret)
    *num_ret = l;
    return list;
 }
-#endif 
+#endif

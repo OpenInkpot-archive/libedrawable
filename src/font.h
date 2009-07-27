@@ -77,6 +77,7 @@ char              **drawable_font_list_font_path(int *num_ret);
 char              **drawable_font_list_fonts(int *num_ret);
 
 DrawableFont          *drawable_font_load_joined(const char *name);
+EAPI DrawableFont   *drawable_font_load(const char *name, int faceidx, int size);
 void                drawable_font_free(DrawableFont * fn);
 int                 drawable_font_insert_into_fallback_chain_imp(DrawableFont * fn,
                                                               DrawableFont * fallback);

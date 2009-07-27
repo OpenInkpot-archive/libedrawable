@@ -12,10 +12,6 @@
 #include "image.h"
 #include "eimlib.h"
 
-static DrawableImage  *images = NULL;
-
-static DrawableLoader *loaders = NULL;
-static int          cache_size = 4096 * 1024;
 
 
 /* create an image data struct and fill it in */
