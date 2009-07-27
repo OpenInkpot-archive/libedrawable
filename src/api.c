@@ -1734,7 +1734,7 @@ drawable_image_tile(Drawable_Context context)
 EAPI    void
 drawable_load_font(Drawable_Context context, const char *font_name, int face, int size)
 {
-    Drawable_Font *font;
+    DrawableFont *font;
     font = drawable_font_load(font_name, face, size);
     drawable_context_set_font(context, font);
 //   return drawable_font_load_joined(font_name);
