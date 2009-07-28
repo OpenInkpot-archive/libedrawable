@@ -4,6 +4,7 @@
 #include "eimlib.h"
 #include "common.h"
 #include "updates.h"
+#include "image.h"
 
 extern EAPI                Drawable_Updates
 drawable_update_append_rect(Drawable_Updates updates, int x, int y, int w, int h);
@@ -279,3 +280,36 @@ edrawable_commit(Evas_Object *obj) {
 //    evas_object_image_data_update_add(img->image, 0, 0, w, h);
 }
 
+void
+edrawable_update_append_rect(Evas_Object *obj, int x, int y, int w, int h) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    drawable_update_append_rect(drawable->updates, x, y, w, h);
+}
+
+void
+edrawable_free_image(Drawable_Image di) {
+    __drawable_FreeImage((DrawableImage *)di);
+}
+
+Drawable_Image
+edrawable_create_cropped_image(Evas_Object *obj, int x, int y, int w, int h){
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+     return edrawable_create_cropped_image(drawable->image,
+             x, y, w, h);
+}
+
+void
+edrawable_blend_image_onto_image(Evas_Object *obj,
+           Drawable_Image source_image,
+           char merge_alpha, int source_x,
+           int source_y, int source_width,
+           int source_height, int destination_x,
+           int destination_y, int destination_width,
+           int destination_height) {
+
+     EDrawable *drawable = evas_object_smart_data_get(obj);
+     drawable_blend_image_onto_image(drawable->image,
+           source_image,
+           merge_alpha, source_x, source_y, source_width, source_height,
+           destination_x, destination_y, destination_width, destination_height);
+}

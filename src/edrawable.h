@@ -74,4 +74,22 @@ edrawable_reset_clip(Evas_Object*);
 
 extern void
 edrawable_commit(Evas_Object *);
+
+extern void
+edrawable_blend_image_onto_image(Evas_Object *obj,
+           Drawable_Image source_image,
+           char merge_alpha, int source_x,
+           int source_y, int source_width,
+           int source_height, int destination_x,
+           int destination_y, int destination_width,
+           int destination_height);
+
+extern Drawable_Image
+edrawable_create_cropped_image(Evas_Object *obj, int x, int y, int w, int h);
+
+extern void
+edrawable_free_image(Drawable_Image di);
+
+extern void
+edrawable_update_append_rect(Evas_Object *obj, int x, int y, int w, int h);
 #endif
