@@ -157,7 +157,7 @@ edrawable_draw_rectangle_fill(Evas_Object *obj, int x1, int y1, int x2, int y2) 
 }
 
 EAPI EDrawablePolygon
-ewl_drawable_polygon_new() {
+edrawable_polygon_new() {
     return (EDrawablePolygon *) drawable_polygon_new();
 }
 
