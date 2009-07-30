@@ -142,7 +142,7 @@ drawable_context_new(void)
 
 
 /* frees the given context if it doesn't have any reference anymore. The
-   last (default) context can never be freed. 
+   last (default) context can never be freed.
    If context is the current context, the context below will be made the
    current context.
 */
@@ -166,7 +166,7 @@ drawable_context_free(Drawable_Context context)
  * @param y The top left y coordinate of the rectangle.
  * @param w The width of the rectangle.
  * @param h The height of the rectangle.
- * 
+ *
  * Sets the rectangle of the current context.
  **/
 EAPI void
@@ -192,11 +192,11 @@ drawable_context_get_cliprect(Drawable_Context context,int *x, int *y, int *w, i
 
 /**
  * @param dither_mask The dither mask flag.
- * 
+ *
  * Selects if, you are rendering to a mask, or producing pixmap masks
  * from images, if the mask is to be dithered or not. passing in 1 for
  * dither_mask means the mask pixmap will be dithered, 0 means it will
- * not be dithered. 
+ * not be dithered.
  */
 EAPI void
 drawable_context_set_dither_mask(Drawable_Context context, char dither_mask)
@@ -205,11 +205,11 @@ drawable_context_set_dither_mask(Drawable_Context context, char dither_mask)
    ctx->dither_mask = dither_mask;
 }
 
-/** 
+/**
  * @return The current dither mask flag.
  *
  * Returns the current mode for dithering pixmap masks. 1 means
- * dithering is enabled and 0 means it is not. 
+ * dithering is enabled and 0 means it is not.
  */
 EAPI char
 drawable_context_get_dither_mask(Drawable_Context context)
@@ -220,7 +220,7 @@ drawable_context_get_dither_mask(Drawable_Context context)
 
 /**
  * @param mask_alpha_threshold The mask alpha threshold.
- * 
+ *
  * Selects, if you are rendering to a mask, the alpha threshold above which
  * mask bits are set. The default mask alpha threshold is 128, meaning that
  * a mask bit will be set if the pixel alpha is >= 128.
@@ -232,7 +232,7 @@ drawable_context_set_mask_alpha_threshold(Drawable_Context context, int mask_alp
    ctx->mask_alpha_threshold = mask_alpha_threshold;
 }
 
-/** 
+/**
  * @return The current mask mask alpha threshold.
  *
  * Returns the current mask alpha threshold.
@@ -246,13 +246,13 @@ drawable_context_get_mask_alpha_threshold(Drawable_Context context)
 
 /**
  * @param anti_alias The anti alias flag.
- * 
+ *
  * Toggles "anti-aliased" scaling of images. This
  * isn't quite correct since it's actually super and sub pixel
  * sampling that it turns on and off, but anti-aliasing is used for
  * having "smooth" edges to lines and shapes and this means when
  * images are scaled they will keep their smooth appearance. Passing
- * in 1 turns this on and 0 turns it off. 
+ * in 1 turns this on and 0 turns it off.
  */
 EAPI void
 drawable_context_set_anti_alias(Drawable_Context context, char anti_alias)
@@ -261,7 +261,7 @@ drawable_context_set_anti_alias(Drawable_Context context, char anti_alias)
    ctx->anti_alias = anti_alias;
 }
 
-/** 
+/**
  * @return The current anti alias flag.
  *
  * Returns if Drawable2 currently will smoothly scale images. 1 means it
@@ -276,14 +276,14 @@ drawable_context_get_anti_alias(Drawable_Context context)
 
 /**
  * @param dither The dithering flag.
- * 
+ *
  * Sets the dithering flag for rendering to a drawable or when pixmaps
  * are produced. This affects the color image appearance by enabling
  * dithering. Dithering slows down rendering but produces considerably
  * better results. this option has no effect foe rendering in 24 bit
  * and up, but in 16 bit and lower it will dither, producing smooth
  * gradients and much better quality images. setting dither to 1
- * enables it and 0 disables it. 
+ * enables it and 0 disables it.
  */
 EAPI void
 drawable_context_set_dither(Drawable_Context context, char dither)
@@ -292,11 +292,11 @@ drawable_context_set_dither(Drawable_Context context, char dither)
    ctx->dither = dither;
 }
 
-/** 
+/**
  * @return The current dithering flag.
  *
  * Returns if image data is rendered with dithering currently. 1 means
- * yes and 0 means no. 
+ * yes and 0 means no.
  */
 EAPI char
 drawable_context_get_dither(Drawable_Context context)
@@ -307,11 +307,11 @@ drawable_context_get_dither(Drawable_Context context)
 
 /**
  * @param blend The blending flag.
- * 
+ *
  * When rendering an image to a drawable, Drawable2 is able to blend the
  * image directly onto the drawable during rendering. Setting this to 1
  * will enable this. If the image has no alpha channel this has no
- * effect. Setting it to 0 will disable this. 
+ * effect. Setting it to 0 will disable this.
  */
 EAPI void
 drawable_context_set_blend(Drawable_Context context, char blend)
@@ -320,11 +320,11 @@ drawable_context_set_blend(Drawable_Context context, char blend)
    ctx->blend = blend;
 }
 
-/** 
+/**
  * @return The current blending flag.
  *
  * Returns if Drawable2 will blend images onto a drawable whilst
- * rendering to that drawable. 1 means yes and 0 means no. 
+ * rendering to that drawable. 1 means yes and 0 means no.
  */
 EAPI char
 drawable_context_get_blend(Drawable_Context context)
@@ -336,14 +336,14 @@ drawable_context_get_blend(Drawable_Context context)
 #if 0
 /**
  * @param color_modifier Current color modifier.
- * 
+ *
  * Sets the current color modifier used for rendering pixmaps or
  * images to a drawable or images onto other images. Color modifiers
  * are lookup tables that map the values in the red, green, blue and
  * alpha channels to other values in the same channel when rendering,
  * allowing for fades, color correction etc. to be done whilst
  * rendering. pass in NULL as the color_modifier to disable the color
- * modifier for rendering. 
+ * modifier for rendering.
  */
 EAPI void
 drawable_context_set_color_modifier(Drawable_Context context, Drawable_Color_Modifier color_modifier)
@@ -352,7 +352,7 @@ drawable_context_set_color_modifier(Drawable_Context context, Drawable_Color_Mod
    ctx->color_modifier = color_modifier;
 }
 
-/** 
+/**
  * @return The current color modifier.
  *
  * Returns the current color modifier being used.
@@ -363,11 +363,11 @@ drawable_context_get_color_modifier(Drawable_Context context)
    DrawableContext *ctx = (DrawableContext *) context;
    return ctx->color_modifier;
 }
-#endif 
+#endif
 
 /**
- * @param operation 
- * 
+ * @param operation
+ *
  * When Drawable2 draws an image onto another or an image onto a drawable
  * it is able to do more than just blend the result on using the given
  * alpha channel of the image. It is also able to do saturating
@@ -378,7 +378,7 @@ drawable_context_get_color_modifier(Drawable_Context context)
  * basic alpha blending: DST = (SRC * A) + (DST * (1 -
  * A)). DRAWABLE_OP_ADD does DST = DST + (SRC * A). DRAWABLE_OP_SUBTRACT does
  * DST = DST - (SRC * A) and DRAWABLE_OP_RESHADE does DST = DST + (((SRC -
- * 0.5) / 2) * A). 
+ * 0.5) / 2) * A).
  */
 EAPI void
 drawable_context_set_operation(Drawable_Context context, Drawable_Operation operation)
@@ -387,7 +387,7 @@ drawable_context_set_operation(Drawable_Context context, Drawable_Operation oper
    ctx->operation = operation;
 }
 
-/** 
+/**
  * @return The current operation mode.
  *
  * Returns the current operation mode.
@@ -401,9 +401,9 @@ drawable_context_get_operation(Drawable_Context context)
 
 /**
  * @param font Current font.
- * 
+ *
  * Sets the current font to use when rendering text. you should load
- * the font first with drawable_load_font(). 
+ * the font first with drawable_load_font().
  */
 EAPI void
 drawable_context_set_font(Drawable_Context context, Drawable_Font font)
@@ -412,7 +412,7 @@ drawable_context_set_font(Drawable_Context context, Drawable_Font font)
    ctx->font = font;
 }
 
-/** 
+/**
  * @return The current font.
  *
  * Returns the current font.
@@ -426,13 +426,13 @@ drawable_context_get_font(Drawable_Context context)
 
 /**
  * @param direction Text direction.
- * 
+ *
  * Sets the direction in which to draw text in terms of simple 90
  * degree orientations or an arbitrary angle. The direction can be one
  * of DRAWABLE_TEXT_TO_RIGHT, DRAWABLE_TEXT_TO_LEFT, DRAWABLE_TEXT_TO_DOWN,
  * DRAWABLE_TEXT_TO_UP or DRAWABLE_TEXT_TO_ANGLE. The default is
  * DRAWABLE_TEXT_TO_RIGHT. If you use DRAWABLE_TEXT_TO_ANGLE, you will also
- * have to set the angle with drawable_context_set_angle(). 
+ * have to set the angle with drawable_context_set_angle().
  */
 EAPI void
 drawable_context_set_direction(Drawable_Context context, Drawable_Text_Direction direction)
@@ -443,7 +443,7 @@ drawable_context_set_direction(Drawable_Context context, Drawable_Text_Direction
 
 /**
  * @param angle Angle of the text strings.
- * 
+ *
  * Sets the angle at which text strings will be drawn if the text
  * direction has been set to DRAWABLE_TEXT_TO_ANGLE with
  * drawable_context_set_direction().
@@ -455,11 +455,11 @@ drawable_context_set_angle(Drawable_Context context, double angle)
    ctx->angle = angle;
 }
 
-/** 
+/**
  * @return The current angle of the text strings.
  *
  * Returns the current angle used to render text at if the direction
- * is DRAWABLE_TEXT_TO_ANGLE. 
+ * is DRAWABLE_TEXT_TO_ANGLE.
  */
 EAPI double
 drawable_context_get_angle(Drawable_Context context)
@@ -468,7 +468,7 @@ drawable_context_get_angle(Drawable_Context context)
    return ctx->angle;
 }
 
-/** 
+/**
  * @return The current direction of the text.
  *
  * Returns the current direction to render text in.
@@ -485,7 +485,7 @@ drawable_context_get_direction(Drawable_Context context)
  * @param green Green channel of the current color.
  * @param blue Blue channel of the current color.
  * @param alpha Alpha channel of the current color.
- * 
+ *
  * Sets the color with which text, lines and rectangles are drawn when
  * being rendered onto an image. Values for @p red, @p green, @p blue
  * and @p alpha are between 0 and 255 - any other values have
@@ -507,7 +507,7 @@ drawable_context_set_color(Drawable_Context context, int red, int green, int blu
  * @param green Green channel of the current color.
  * @param blue Blue channel of the current color.
  * @param alpha Alpha channel of the current color.
- * 
+ *
  * Returns the current color for rendering text, rectangles and lines.
  */
 EAPI void
@@ -520,11 +520,11 @@ drawable_context_get_color(Drawable_Context context, int *red, int *green, int *
    *alpha = ctx->color.alpha;
 }
 
-/** 
+/**
  * @return The current color.
  *
  * Returns the current color as a color struct. Do NOT free this
- * pointer. 
+ * pointer.
  */
 EAPI Drawable_Color   *
 drawable_context_get_drawable_color(Drawable_Context context)
@@ -538,7 +538,7 @@ drawable_context_get_drawable_color(Drawable_Context context)
  * @param saturation Saturation channel of the current color.
  * @param value Value channel of the current color.
  * @param alpha Alpha channel of the current color.
- * 
+ *
  * Sets the color in HSVA space. Values for @p hue are between 0 and 360,
  * values for @p saturation and @p value between 0 and 1, and values for
  * @p alpha are between 0 and 255 - any other values have undefined
@@ -559,9 +559,9 @@ drawable_context_set_color_hsva(Drawable_Context context, float hue, float satur
  * @param saturation Saturation channel of the current color.
  * @param value Value channel of the current color.
  * @param alpha Alpha channel of the current color.
- * 
+ *
  * Returns the current color for rendering text, rectangles and lines
- * in HSVA space. 
+ * in HSVA space.
  */
 EAPI void
 drawable_context_get_color_hsva(Drawable_Context context, float *hue, float *saturation, float *value,
@@ -578,11 +578,11 @@ drawable_context_get_color_hsva(Drawable_Context context, float *hue, float *sat
  * @param lightness Lightness channel of the current color.
  * @param saturation Saturation channel of the current color.
  * @param alpha Alpha channel of the current color.
- * 
+ *
  * Sets the color in HLSA space. Values for @p hue are between 0 and 360,
  * values for @p lightness and @p saturation between 0 and 1, and values for
  * @p alpha are between 0 and 255 - any other values have undefined
- * results. 
+ * results.
  */
 EAPI void
 drawable_context_set_color_hlsa(Drawable_Context context, float hue, float lightness, float saturation,
@@ -599,9 +599,9 @@ drawable_context_set_color_hlsa(Drawable_Context context, float hue, float light
  * @param lightness Lightness channel of the current color.
  * @param saturation Saturation channel of the current color.
  * @param alpha Alpha channel of the current color.
- * 
+ *
  * Returns the current color for rendering text, rectangles and lines
- * in HLSA space. 
+ * in HLSA space.
  */
 EAPI void
 drawable_context_get_color_hlsa(Drawable_Context context, float *hue, float *lightness, float *saturation,
@@ -618,10 +618,10 @@ drawable_context_get_color_hlsa(Drawable_Context context, float *hue, float *lig
  * @param magenta Magenta channel of the current color.
  * @param yellow Yellow channel of the current color.
  * @param alpha Alpha channel of the current color.
- * 
+ *
  * Sets the color in CMYA space. Values for @p cyan, @p magenta, @p yellow and
  * @p alpha are between 0 and 255 - any other values have undefined
- * results. 
+ * results.
  */
 EAPI void
 drawable_context_set_color_cmya(Drawable_Context context, int cyan, int magenta, int yellow, int alpha)
@@ -638,9 +638,9 @@ drawable_context_set_color_cmya(Drawable_Context context, int cyan, int magenta,
  * @param magenta Magenta channel of the current color.
  * @param yellow Yellow channel of the current color.
  * @param alpha Alpha channel of the current color.
- * 
+ *
  * Returns the current color for rendering text, rectangles and lines
- * in CMYA space. 
+ * in CMYA space.
  */
 EAPI void
 drawable_context_get_color_cmya(Drawable_Context context, int *cyan, int *magenta, int *yellow, int *alpha)
@@ -655,7 +655,7 @@ drawable_context_get_color_cmya(Drawable_Context context, int *cyan, int *magent
 #if 0
 /**
  * @param color_range Color range.
- * 
+ *
  * Sets the current color range to use for rendering gradients.
  */
 EAPI void
@@ -667,7 +667,7 @@ drawable_context_set_color_range(Drawable_Color_Range color_range)
 
 /**
  * @return The current color range.
- * 
+ *
  * Returns the current color range being used for gradients.
  */
 EAPI                Drawable_Color_Range
@@ -681,10 +681,10 @@ drawable_context_get_color_range(void)
 
 /**
  * @param progress_function A progress function.
- * 
+ *
  * Sets the progress function to be called back whilst loading
  * images. Set this to the function to be called, or set it to NULL to
- * disable progress callbacks whilst loading. 
+ * disable progress callbacks whilst loading.
  */
 EAPI void
 drawable_context_set_progress_function(Drawable_Context context, Drawable_Progress_Function progress_function)
@@ -695,7 +695,7 @@ drawable_context_set_progress_function(Drawable_Context context, Drawable_Progre
 
 /**
  * @return The current progress function.
- * 
+ *
  * Returns the current progress function being used.
  */
 EAPI                Drawable_Progress_Function
@@ -707,12 +707,12 @@ drawable_context_get_progress_function(Drawable_Context context)
 
 /**
  * @param progress_granularity A char.
- * 
+ *
  * This hints as to how often to call the progress callback. 0 means
  * as often as possible. 1 means whenever 15 more of the image has been
  * decoded, 10 means every 10% of the image decoding, 50 means every
  * 50% and 100 means only call at the end. Values outside of the range
- * 0-100 are undefined. 
+ * 0-100 are undefined.
  */
 EAPI void
 drawable_context_set_progress_granularity(Drawable_Context context, char progress_granularity)
@@ -723,7 +723,7 @@ drawable_context_set_progress_granularity(Drawable_Context context, char progres
 
 /**
  * @return The current progress granularity
- * 
+ *
  * Returns the current progress granularity being used.
  */
 EAPI char
@@ -735,7 +735,7 @@ drawable_context_get_progress_granularity(Drawable_Context context)
 
 /**
  * @param image Current image.
- * 
+ *
  * Sets the current image Drawable2 will be using with its function calls.
  */
 EAPI void
@@ -747,7 +747,7 @@ drawable_context_set_image(Drawable_Context context, Drawable_Image image)
 
 /**
  * @return The current image.
- * 
+ *
  * Returns the current context image.
  */
 EAPI                Drawable_Image
@@ -831,7 +831,7 @@ drawable_image_get_height(Drawable_Context context)
 
 /**
  * @return A pointer to the image data.
- * 
+ *
  * Returns a pointer to the image data in the image set as the image
  * for the current context. When you get this pointer it is assumed you
  * are planning on writing to the data, thus once you do this the image
@@ -844,7 +844,7 @@ drawable_image_get_height(Drawable_Context context)
  * line. Each pixel has the upper 8 bits as the alpha channel and the
  * lower 8 bits are the blue channel - so a pixel's bits are ARGB (from
  * most to least significant, 8 bits per channel). You must put the
- * data back at some point. 
+ * data back at some point.
  */
 EAPI DATA32        *
 drawable_image_get_data(Drawable_Context context)
@@ -865,11 +865,11 @@ drawable_image_get_data(Drawable_Context context)
 
 /**
  * @return A pointer to the image data.
- * 
+ *
  * Functions the same way as drawable_image_get_data(), but returns a
  * pointer expecting the program to NOT write to the data returned (it
  * is for inspection purposes only). Writing to this data has undefined
- * results. The data does not need to be put back. 
+ * results. The data does not need to be put back.
  */
 EAPI DATA32        *
 drawable_image_get_data_for_reading_only(Drawable_Context context)
@@ -889,11 +889,11 @@ drawable_image_get_data_for_reading_only(Drawable_Context context)
 
 /**
  * @param data The pointer to the image data.
- * 
+ *
  * Puts back @p data when it was obtained by
  * drawable_image_get_data(). @p data must be the same pointer returned
  * by drawable_image_get_data(). This operated on the current context
- * image.  
+ * image.
  */
 EAPI void
 drawable_image_put_back_data(Drawable_Context context, DATA32 * data)
@@ -910,10 +910,10 @@ drawable_image_put_back_data(Drawable_Context context, DATA32 * data)
 
 /**
  * @return Current alpha channel flag.
- * 
+ *
  * Returns 1 if the current context image has an alpha channel, or 0
  * if it does not (the alpha data space is still there and available -
- * just "unused"). 
+ * just "unused").
  */
 EAPI char
 drawable_image_has_alpha(Drawable_Context context)
@@ -929,7 +929,7 @@ drawable_image_has_alpha(Drawable_Context context)
 }
 
 EAPI void
-drawable_image_set_alpha(Drawable_Context context, char flag) 
+drawable_image_set_alpha(Drawable_Context context, char flag)
 {
    DrawableContext *ctx = (DrawableContext *) context;
     __drawable_SetImageAlphaFlag(ctx->image, flag);
@@ -938,7 +938,7 @@ drawable_image_set_alpha(Drawable_Context context, char flag)
 #if 0
 /**
  * @param border The border of the image.
- * 
+ *
  * Fills the Drawable_Border structure to which @p border points to with the
  * values of the border of the current context image. The border is the
  * area at the edge of the image that does not scale with the rest of
@@ -963,9 +963,9 @@ drawable_image_get_border(Drawable_Context context, Drawable_Border * border)
 
 /**
  * @param border The border of the image.
- * 
+ *
  * Sets the border of the current context image to the values contained
- * in the Drawable_Border structure @p border points to. 
+ * in the Drawable_Border structure @p border points to.
  */
 EAPI void
 drawable_image_set_border(Drawable_Context context, Drawable_Border * border)
@@ -1000,15 +1000,15 @@ drawable_image_set_border(Drawable_Context context, Drawable_Border * border)
  * @param destination_y Y coordinate of the destination image.
  * @param destination_width Width of the destination image.
  * @param destination_height Height of the destination image.
- * 
+ *
  * Blends the source rectangle (@p source_x, @p source_y, @p
- * source_width, @p source_height) from 
+ * source_width, @p source_height) from
  * @p source_image onto the current image at the destination (@p
  * destination_x, @p destination_y) location
  * scaled to the width @p destination_width and height @p
  * destination_height. If @p merge_alpha is set to 1
  * it will also modify the destination image alpha channel, otherwise
- * the destination alpha channel is left untouched. 
+ * the destination alpha channel is left untouched.
  */
 EAPI void
 drawable_blend_image_onto_image(Drawable_Context context, Drawable_Image source_image, char merge_alpha,
@@ -1053,7 +1053,7 @@ drawable_blend_image_onto_image(Drawable_Context context, Drawable_Image source_
  * @param width The width of the image.
  * @param height The height of the image.
  * @return A new blank image.
- * 
+ *
  * Creates a new blank image of size @p width and @p height. The contents of
  * this image at creation time are undefined (they could be garbage
  * memory). You are free to do whatever you like with this image. It
@@ -1078,7 +1078,7 @@ drawable_create_image(int width, int height)
  * @param height The height of the image.
  * @param data The data.
  * @return A valid image, otherwise NULL.
- * 
+ *
  * Creates an image from the image data specified with the width @p width and
  * the height @p height specified. The image data @p data must be in the same format as
  * drawable_image_get_data() would return. You are responsible for
@@ -1088,8 +1088,8 @@ drawable_create_image(int width, int height)
  * use such a format) and wish to use Drawable2 to render the results
  * onto another image, or X drawable. You should free the image when
  * you are done with it. Drawable2 returns a valid image handle on
- * success or NULL on failure 
- * 
+ * success or NULL on failure
+ *
  **/
 EAPI                Drawable_Image
 drawable_create_image_using_data(int width, int height, DATA32 * data)
@@ -1111,13 +1111,13 @@ drawable_create_image_using_data(int width, int height, DATA32 * data)
  * @param height The height of the image.
  * @param data The data.
  * @return A valid image, otherwise NULL.
- * 
+ *
  * Works the same way as drawable_create_image_using_data() but Drawable2
  * copies the image data to the image structure. You may now do
  * whatever you wish with the original data as it will not be needed
  * anymore. Drawable2 returns a valid image handle on success or NULL on
- * failure. 
- * 
+ * failure.
+ *
  **/
 EAPI                Drawable_Image
 drawable_create_image_using_copied_data(int width, int height, DATA32 * data)
@@ -1145,10 +1145,10 @@ drawable_create_image_using_copied_data(int width, int height, DATA32 * data)
 
 /**
  * @return A valid image, otherwise NULL.
- * 
+ *
  * Creates an exact duplicate of the current image and returns a valid
- * image handle on success, or NULL on failure. 
- * 
+ * image handle on success, or NULL on failure.
+ *
  **/
 EAPI                Drawable_Image
 drawable_clone_image(Drawable_Context context)
@@ -1196,11 +1196,11 @@ drawable_clone_image(Drawable_Context context)
  * @param width The width of the rectangle.
  * @param height The height of the rectangle.
  * @return A valid image, otherwise NULL.
- * 
+ *
  * Creates a duplicate of a (@p x, @p y, @p width, @p height) rectangle in the
  * current image and returns a valid image handle on success, or NULL
- * on failure. 
- * 
+ * on failure.
+ *
  **/
 EAPI                Drawable_Image
 drawable_create_cropped_image(Drawable_Context context, int x, int y, int width, int height)
@@ -1250,11 +1250,11 @@ drawable_create_cropped_image(Drawable_Context context, int x, int y, int width,
  * @param destination_width The width of the destination image.
  * @param destination_height The height of the destination image.
  * @return A valid image, otherwise NULL.
- * 
+ *
  * Works the same as drawable_create_cropped_image() but will scale the
  * new image to the new destination @p destination_width and
- * @p destination_height whilst cropping.  
- * 
+ * @p destination_height whilst cropping.
+ *
  **/
 EAPI                Drawable_Image
 drawable_create_cropped_scaled_image(Drawable_Context context, int source_x, int source_y,
@@ -1305,7 +1305,7 @@ drawable_create_cropped_scaled_image(Drawable_Context context, int source_x, int
 /**
  * @param updates An updates list.
  * @return Duplicate of @p updates.
- * 
+ *
  * Creates a duplicate of the updates list passed into the function.
  **/
 EAPI                Drawable_Updates
@@ -1323,11 +1323,11 @@ drawable_updates_clone(Drawable_Updates updates)
  * @param w The width of the rectangle.
  * @param h The height of the rectangle.
  * @return The updates handle.
- * 
+ *
  * Appends an update rectangle to the updates list passed in (if the
  * updates is NULL it will create a new updates list) and returns a
  * handle to the modified updates list (the handle may be modified so
- * only use the new updates handle returned). 
+ * only use the new updates handle returned).
  **/
 EAPI                Drawable_Updates
 drawable_update_append_rect(Drawable_Updates updates, int x, int y, int w, int h)
@@ -1343,12 +1343,12 @@ drawable_update_append_rect(Drawable_Updates updates, int x, int y, int w, int h
  * @param w The width of the rectangle.
  * @param h The height of the rectangle.
  * @return The updates handle.
- * 
+ *
  * Takes an updates list, and modifies it by merging overlapped
  * rectangles and lots of tiny rectangles into larger rectangles to
  * minimize the number of rectangles in the list for optimized
  * redrawing. The new updates handle is now valid and the old one
- * passed in is not. 
+ * passed in is not.
  **/
 EAPI                Drawable_Updates
 drawable_updates_merge(Drawable_Updates updates, int w, int h)
@@ -1364,10 +1364,10 @@ drawable_updates_merge(Drawable_Updates updates, int w, int h)
  * @param w The width of the rectangle.
  * @param h The height of the rectangle.
  * @return The updates handle.
- * 
+ *
  * Works almost exactly as drawable_updates_merge() but is more lenient
  * on the spacing between update rectangles - if they are very close it
- * amalgamates 2 smaller rectangles into 1 larger one. 
+ * amalgamates 2 smaller rectangles into 1 larger one.
  **/
 EAPI                Drawable_Updates
 drawable_updates_merge_for_rendering(Drawable_Updates updates, int w, int h)
@@ -1380,7 +1380,7 @@ drawable_updates_merge_for_rendering(Drawable_Updates updates, int w, int h)
 
 /**
  * @param updates An updates list.
- * 
+ *
  * Frees an updates list.
  **/
 EAPI void
@@ -1395,9 +1395,9 @@ drawable_updates_free(Drawable_Updates updates)
 /**
  * @param updates An updates list.
  * @return The next updates.
- * 
+ *
  * Gets the next update in the updates list relative to the one passed
- * in. 
+ * in.
  **/
 EAPI                Drawable_Updates
 drawable_updates_get_next(Drawable_Updates updates)
@@ -1414,7 +1414,7 @@ drawable_updates_get_next(Drawable_Updates updates)
  * @param y_return The top left y coordinate of the update.
  * @param width_return The width of the update.
  * @param height_return The height of the update.
- * 
+ *
  * Returns the coordinates of an update.
  **/
 EAPI void
@@ -1442,7 +1442,7 @@ drawable_updates_get_coordinates(Drawable_Updates updates, int *x_return,
  * @param y The top left y coordinate of the update.
  * @param width The width of the update.
  * @param height The height of the update.
- * 
+ *
  * Modifies the coordinates of an update in @p update.
  **/
 EAPI void
@@ -1462,9 +1462,9 @@ drawable_updates_set_coordinates(Drawable_Updates updates, int x, int y, int wid
 
 /**
  * @return The initialized updates list.
- * 
+ *
  * Initializes an updates list before you add any updates to it or
- * merge it for rendering etc. 
+ * merge it for rendering etc.
  **/
 EAPI                Drawable_Updates
 drawable_updates_init(void)
@@ -1476,9 +1476,9 @@ drawable_updates_init(void)
  * @param updates An updates list.
  * @param appended_updates The updates list to append.
  * @return The new updates list.
- * 
+ *
  * Appends @p appended_updates to the updates list @p updates and
- * returns the new list.  
+ * returns the new list.
  **/
 EAPI                Drawable_Updates
 drawable_updates_append_updates(Drawable_Updates updates,
@@ -1545,7 +1545,7 @@ drawable_image_flip_vertical(Drawable_Context context)
 /**
  * Flips/mirrors the current image diagonally (good for quick and dirty
  * 90 degree rotations if used before to after a horizontal or vertical
- * flip). 
+ * flip).
  **/
 EAPI void
 drawable_image_flip_diagonal(Drawable_Context context)
@@ -1565,11 +1565,11 @@ drawable_image_flip_diagonal(Drawable_Context context)
 
 /**
  * @param orientation The orientation.
- * 
+ *
  * Performs 90 degree rotations on the current image. Passing in
  * @p orientation does not rotate, 1 rotates clockwise by 90 degree, 2,
  * rotates clockwise by 180 degrees, 3 rotates clockwise by 270
- * degrees. 
+ * degrees.
  **/
 EAPI void
 drawable_image_orientate(Drawable_Context context, int orientation)
@@ -1615,10 +1615,10 @@ drawable_image_orientate(Drawable_Context context, int orientation)
 
 /**
  * @param radius The radius.
- * 
+ *
  * Blurs the current image. A @p radius value of 0 has no effect, 1 and above
  * determine the blur matrix radius that determine how much to blur the
- * image. 
+ * image.
  **/
 EAPI void
 drawable_image_blur(Drawable_Context context, int radius)
@@ -1638,9 +1638,9 @@ drawable_image_blur(Drawable_Context context, int radius)
 
 /**
  * @param radius The radius.
- * 
+ *
  * Sharpens the current image. The @p radius value affects how much to sharpen
- * by. 
+ * by.
  **/
 EAPI void
 drawable_image_sharpen(Drawable_Context context, int radius)
@@ -1723,18 +1723,18 @@ drawable_image_tile(Drawable_Context context)
 /**
  * @param font_name The font name with the size.
  * @return NULL if no font found.
- * 
+ *
  * Loads a truetype font from the first directory in the font path that
  * contains that font. The font name @p font_name format is "font_name/size". For
  * example. If there is a font file called blum.ttf somewhere in the
  * font path you might use "blum/20" to load a 20 pixel sized font of
- * blum. If the font cannot be found NULL is returned. 
- * 
+ * blum. If the font cannot be found NULL is returned.
+ *
  **/
 EAPI    void
 drawable_load_font(Drawable_Context context, const char *font_name, int face, int size)
 {
-    Drawable_Font *font;
+    DrawableFont *font;
     font = drawable_font_load(font_name, face, size);
     drawable_context_set_font(context, font);
 //   return drawable_font_load_joined(font_name);
@@ -1825,15 +1825,14 @@ drawable_get_next_font_in_fallback_chain(Drawable_Font fn)
  * @param x The x coordinate of the top left  corner.
  * @param y The y coordinate of the top left  corner.
  * @param text A null-byte terminated string.
- * 
+ *
  * Draws the null-byte terminated string @p text using the current font on
  * the current image at the (@p x, @p y) location (@p x, @p y denoting the top left
- * corner of the font string) 
+ * corner of the font string)
  **/
 EAPI void
 drawable_text_draw(Drawable_Context context, int x, int y, const char *text)
 {
-   DrawableContext *ctx = (DrawableContext *) context;
    drawable_text_draw_with_return_metrics(context, x, y, text, NULL, NULL, NULL, NULL);
 }
 
@@ -1845,13 +1844,13 @@ drawable_text_draw(Drawable_Context context, int x, int y, const char *text)
  * @param height_return The height of the string.
  * @param horizontal_advance_return Horizontal offset.
  * @param vertical_advance_return Vertical offset.
- * 
+ *
  * Works just like drawable_text_draw() but also returns the width and
  * height of the string drawn, and @p horizontal_advance_return returns
  * the number of pixels you should advance horizontally to draw another
  * string (useful if you are drawing a line of text word by word) and
  * @p vertical_advance_return does the same for the vertical direction
- * (i.e. drawing text line by line). 
+ * (i.e. drawing text line by line).
  **/
 EAPI void
 drawable_text_draw_with_return_metrics(Drawable_Context context, int x, int y, const char *text,
@@ -1880,7 +1879,7 @@ drawable_text_draw_with_return_metrics(Drawable_Context context, int x, int y, c
    dir = ctx->direction;
    if (ctx->direction == DRAWABLE_TEXT_TO_ANGLE && ctx->angle == 0.0)
       dir = DRAWABLE_TEXT_TO_RIGHT;
-    
+
     printf("here..\n");
    drawable_render_str(im, fn, x, y, text, (DATA8) ctx->color.red,
                     (DATA8) ctx->color.green, (DATA8) ctx->color.blue,
@@ -1896,9 +1895,9 @@ drawable_text_draw_with_return_metrics(Drawable_Context context, int x, int y, c
  * @param text A string.
  * @param width_return The width of the text.
  * @param height_return The height of the text.
- * 
+ *
  * Gets the width and height in pixels the @p text string would use up
- * if drawn with the current font. 
+ * if drawn with the current font.
  **/
 EAPI void
 drawable_get_text_size(Drawable_Context context, const char *text, int *width_return, int *height_return)
@@ -1997,12 +1996,12 @@ drawable_get_text_size(Drawable_Context context, const char *text, int *width_re
  * @param text A string.
  * @param horizontal_advance_return Horizontal offset.
  * @param vertical_advance_return Vertical offset.
- * 
+ *
  * Gets the advance horizontally and vertically in pixels the next
  * text string would need to be placed at for the current font. The
  * advances are not adjusted for rotation so you will have to translate
  * the advances (which are calculated as if the text was drawn
- * horizontally from left to right) depending on the text orientation. 
+ * horizontally from left to right) depending on the text orientation.
  **/
 EAPI void
 drawable_get_text_advance(Drawable_Context context, const char *text, int *horizontal_advance_return,
@@ -2025,10 +2024,10 @@ drawable_get_text_advance(Drawable_Context context, const char *text, int *horiz
 /**
  * @param text A string.
  * @return The inset value of @text.
- * 
+ *
  * Returns the inset of the first character of @p text
- * in using the current font and returns that value in pixels. 
- * 
+ * in using the current font and returns that value in pixels.
+ *
  **/
 EAPI int
 drawable_get_text_inset(Drawable_Context context, const char *text)
@@ -2045,9 +2044,9 @@ drawable_get_text_inset(Drawable_Context context, const char *text)
 #if 0
 /**
  * @param path A directory path.
- * 
+ *
  * Adds the directory @p path to the end of the current list of
- * directories to scan for fonts. 
+ * directories to scan for fonts.
  **/
 EAPI void
 drawable_add_path_to_font_path(const char *path)
@@ -2059,7 +2058,7 @@ drawable_add_path_to_font_path(const char *path)
 
 /**
  * @param path A directory path.
- * 
+ *
  * Removes all directories in the font path that match @p path.
  **/
 EAPI void
@@ -2072,14 +2071,14 @@ drawable_remove_path_from_font_path(const char *path)
 /**
  * @param number_return Number of paths in the list.
  * @return A list of strings.
- * 
+ *
  * Returns a list of strings that are the directories in the font
  * path. Do not free this list or change it in any way. If you add or
  * delete members of the font path this list will be invalid. If you
  * intend to use this list later duplicate it for your own use. The
  * number of elements in the array of strings is put into
- * @p number_return. 
- * 
+ * @p number_return.
+ *
  **/
 EAPI char         **
 drawable_list_font_path(int *number_return)
@@ -2099,14 +2098,14 @@ drawable_list_font_path(int *number_return)
  * @param char_width_return The width of the character.
  * @param char_height_return The height of the character.
  * @return -1 if no character found.
- * 
+ *
  * Returns the character number in the string @p text using the current
  * font at the (@p x, @p y) pixel location which is an offset relative to the
  * top left of that string. -1 is returned if there is no character
  * there. If there is a character, @p char_x_return, @p char_y_return,
  * @p char_width_return and @p char_height_return (respectively the
- * character x, y, width and height)  are also filled in. 
- * 
+ * character x, y, width and height)  are also filled in.
+ *
  **/
 EAPI int
 drawable_text_get_index_and_location(Drawable_Context context, const char *text, int x, int y,
@@ -2217,9 +2216,9 @@ drawable_text_get_index_and_location(Drawable_Context context, const char *text,
  * @param char_y_return The y coordinate of the character.
  * @param char_width_return The width of the character.
  * @param char_height_return The height of the character.
- * 
+ *
  * Gets the geometry of the character at index @p index in the @p text
- * string using the current font. 
+ * string using the current font.
  **/
 EAPI void
 drawable_text_get_location_at_index(Drawable_Context context, const char *text, int index,
@@ -2297,9 +2296,9 @@ drawable_text_get_location_at_index(Drawable_Context context, const char *text, 
 /**
  * @param number_return Number of fonts in the list.
  * @return A list of fonts.
- * 
+ *
  * Returns a list of fonts imlib2 can find in its font path.
- * 
+ *
  **/
 EAPI char         **
 drawable_list_fonts(int *number_return)
@@ -2312,9 +2311,9 @@ drawable_list_fonts(int *number_return)
 /**
  * @param font_list The font list.
  * @param number Number of fonts in the list.
- * 
+ *
  * Frees the font list returned by drawable_list_fonts().
- * 
+ *
  **/
 EAPI void
 drawable_free_font_list(char **font_list, int number)
@@ -2327,7 +2326,7 @@ drawable_free_font_list(char **font_list, int number)
  * @return The font cache size.
  *
  * Returns the font cache size in bytes.
- * 
+ *
  **/
 EAPI int
 drawable_get_font_cache_size(void)
@@ -2337,11 +2336,11 @@ drawable_get_font_cache_size(void)
 
 /**
  * @param bytes The font cache size.
- * 
+ *
  * Sets the font cache in bytes. Whenever you set the font cache size
  * Drawable2 will flush fonts from the cache until the memory used by
  * fonts is less than or equal to the font cache size. Setting the size
- * to 0 effectively frees all speculatively cached fonts. 
+ * to 0 effectively frees all speculatively cached fonts.
  **/
 EAPI void
 drawable_set_font_cache_size(int bytes)
@@ -2351,7 +2350,7 @@ drawable_set_font_cache_size(int bytes)
 
 /**
  * Causes a flush of all speculatively cached fonts from the font
- * cache. 
+ * cache.
  **/
 EAPI void
 drawable_flush_font_cache(void)
@@ -2363,7 +2362,7 @@ drawable_flush_font_cache(void)
  * @return The font's ascent.
  *
  * Returns the current font's ascent value in pixels.
- * 
+ *
  **/
 EAPI int
 drawable_get_font_ascent(Drawable_Context context)
@@ -2375,9 +2374,9 @@ drawable_get_font_ascent(Drawable_Context context)
 
 /**
  * @return The font's descent.
- * 
+ *
  * Returns the current font's descent value in pixels.
- * 
+ *
  **/
 EAPI int
 drawable_get_font_descent(Drawable_Context context)
@@ -2389,9 +2388,9 @@ drawable_get_font_descent(Drawable_Context context)
 
 /**
  * @return The font's maximum ascent.
- * 
+ *
  * Returns the current font's maximum ascent extent.
- * 
+ *
  **/
 EAPI int
 drawable_get_maximum_font_ascent(Drawable_Context context)
@@ -2403,9 +2402,9 @@ drawable_get_maximum_font_ascent(Drawable_Context context)
 
 /**
  * @return The font's maximum descent.
- * 
+ *
  * Returns the current font's maximum descent extent.
- * 
+ *
  **/
 EAPI int
 drawable_get_maximum_font_descent(Drawable_Context context)
@@ -2418,10 +2417,10 @@ drawable_get_maximum_font_descent(Drawable_Context context)
 #if 0
 /**
  * @return Valid handle.
- * 
+ *
  * Creates a new empty color modifier and returns a
- * valid handle on success. NULL is returned on failure. 
- * 
+ * valid handle on success. NULL is returned on failure.
+ *
  **/
 EAPI                Drawable_Color_Modifier
 drawable_create_color_modifier(void)
@@ -2445,12 +2444,12 @@ drawable_free_color_modifier(void)
 
 /**
  * @param gamma_value Value of gamma.
- * 
+ *
  * Modifies the current color modifier by adjusting the gamma by the
  * value specified @p gamma_value. The color modifier is modified not set, so calling
  * this repeatedly has cumulative effects. A gamma of 1.0 is normal
  * linear, 2.0 brightens and 0.5 darkens etc. Negative values are not
- * allowed. 
+ * allowed.
  **/
 EAPI void
 drawable_modify_color_modifier_gamma(double gamma_value)
@@ -2464,7 +2463,7 @@ drawable_modify_color_modifier_gamma(double gamma_value)
 
 /**
  * @param brightness_value Value of brightness.
- * 
+ *
  * Modifies the current color modifier by adjusting the brightness by
  * the value @p brightness_value. The color modifier is modified not set, so
  * calling this repeatedly has cumulative effects. brightness values
@@ -2484,11 +2483,11 @@ drawable_modify_color_modifier_brightness(double brightness_value)
 
 /**
  * @param contrast_value Value of contrast.
- * 
+ *
  * Modifies the current color modifier by adjusting the contrast by
  * the value @p contrast_value. The color modifier is modified not set, so
  * calling this repeatedly has cumulative effects. Contrast of 1.0 does
- * nothing. 0.0 will merge to gray, 2.0 will double contrast etc. 
+ * nothing. 0.0 will merge to gray, 2.0 will double contrast etc.
  **/
 EAPI void
 drawable_modify_color_modifier_contrast(double contrast_value)
@@ -2505,12 +2504,12 @@ drawable_modify_color_modifier_contrast(double contrast_value)
  * @param green_table An array of #DATA8.
  * @param blue_table An array of #DATA8.
  * @param alpha_table An array of #DATA8.
- * 
+ *
  * Explicitly copies the mapping tables from the table pointers passed
  * into this function into those of the current color modifier. Tables
  * are 256 entry arrays of DATA8 which are a mapping of that channel
  * value to a new channel value. A normal mapping would be linear (v[0]
- * = 0, v[10] = 10, v[50] = 50, v[200] = 200, v[255] = 255). 
+ * = 0, v[10] = 10, v[50] = 50, v[200] = 200, v[255] = 255).
  **/
 EAPI void
 drawable_set_color_modifier_tables(DATA8 * red_table, DATA8 * green_table,
@@ -2528,10 +2527,10 @@ drawable_set_color_modifier_tables(DATA8 * red_table, DATA8 * green_table,
  * @param green_table: an array of #DATA8.
  * @param blue_table: an array of #DATA8.
  * @param alpha_table: an array of #DATA8.
- * 
+ *
  * Copies the table values from the current color modifier into the
  * pointers to mapping tables specified. They must have 256 entries and
- * be DATA8 format. 
+ * be DATA8 format.
  **/
 EAPI void
 drawable_get_color_modifier_tables(DATA8 * red_table, DATA8 * green_table,
@@ -2558,7 +2557,7 @@ drawable_reset_color_modifier(void)
 
 /**
  * Uses the current color modifier and modifies the current image using
- * the mapping tables in the current color modifier. 
+ * the mapping tables in the current color modifier.
  **/
 EAPI void
 drawable_apply_color_modifier(void)
@@ -2584,9 +2583,9 @@ drawable_apply_color_modifier(void)
  * @param y  The y coordinate of the top edge of the rectangle.
  * @param width  The width of the rectangle.
  * @param height  The height of the rectangle.
- * 
+ *
  * Works the same way as drawable_apply_color_modifier() but only modifies
- * a selected rectangle in the current image. 
+ * a selected rectangle in the current image.
  **/
 EAPI void
 drawable_apply_color_modifier_to_rectangle(int x, int y, int width, int height)
@@ -2667,12 +2666,12 @@ drawable_image_draw_pixel(Drawable_Context context, int x, int y, char make_upda
  * @param y2 The y coordinate of the second point.
  * @param make_updates: a char.
  * @return An updates list.
- * 
+ *
  * Draws a line using the current color on the current image from
  * coordinates (@p x1, @p y1) to (@p x2, @p y2). If @p make_updates is 1 it will also
  * return an update you can use for an updates list, otherwise it
- * returns NULL. 
- * 
+ * returns NULL.
+ *
  **/
 EAPI                Drawable_Updates
 drawable_image_draw_line(Drawable_Context context, int x1, int y1, int x2, int y2, char make_updates)
@@ -2708,11 +2707,11 @@ drawable_image_draw_line(Drawable_Context context, int x1, int y1, int x2, int y
  * @param y The top left y coordinate of the rectangle.
  * @param width The width of the rectangle.
  * @param height The height of the rectangle.
- * 
+ *
  * Draws the outline of a rectangle on the current image at the (@p x,
  * @p y)
  * coordinates with a size of @p width and @p height pixels, using the
- * current color. 
+ * current color.
  **/
 EAPI void
 drawable_image_draw_rectangle(Drawable_Context context, int x, int y, int width, int height)
@@ -2743,10 +2742,10 @@ drawable_image_draw_rectangle(Drawable_Context context, int x, int y, int width,
  * @param y The top left y coordinate of the rectangle.
  * @param width The width of the rectangle.
  * @param height The height of the rectangle.
- * 
+ *
  * Draws a filled rectangle on the current image at the (@p x, @p y)
  * coordinates with a size of @p width and @p height pixels, using the
- * current color. 
+ * current color.
  **/
 EAPI void
 drawable_image_fill_rectangle(Drawable_Context context, int x, int y, int width, int height)
@@ -2776,10 +2775,10 @@ drawable_image_fill_rectangle(Drawable_Context context, int x, int y, int width,
  * @param image_source An image.
  * @param x The x coordinate.
  * @param y The y coordinate.
- * 
+ *
  * Copies the alpha channel of the source image @p image_source to the
  * (@p x, @p y) coordinates
- * of the current image, replacing the alpha channel there. 
+ * of the current image, replacing the alpha channel there.
  **/
 EAPI void
 drawable_image_copy_alpha_to_image(Drawable_Context context, Drawable_Image image_source, int x, int y)
@@ -2813,10 +2812,10 @@ drawable_image_copy_alpha_to_image(Drawable_Context context, Drawable_Image imag
  * @param height The height of the rectangle.
  * @param destination_x The top left x coordinate of the destination rectangle.
  * @param destination_y The top left x coordinate of the destination rectangle.
- * 
+ *
  * Copies the source (@p x, @p y, @p width, @p height) rectangle alpha channel from
  * the source image @p image_source and replaces the alpha channel on the destination
- * image at the (@p destination_x, @p destination_y) coordinates. 
+ * image at the (@p destination_x, @p destination_y) coordinates.
  **/
 EAPI void
 drawable_image_copy_alpha_rectangle_to_image(Drawable_Context context, Drawable_Image image_source, int x,
@@ -2852,10 +2851,10 @@ drawable_image_copy_alpha_rectangle_to_image(Drawable_Context context, Drawable_
  * @param height The height of the rectangle.
  * @param delta_x Distance along the x coordinates.
  * @param delta_y Distance along the y coordinates.
- * 
+ *
  * Scrolls a rectangle of size @p width, @p height at the (@p x, @p y)
  * location within the current image
- * by the @p delta_x, @p delta_y distance (in pixels). 
+ * by the @p delta_x, @p delta_y distance (in pixels).
  **/
 EAPI void
 drawable_image_scroll_rect(Drawable_Context context, int x, int y, int width, int height, int delta_x,
@@ -2906,10 +2905,10 @@ drawable_image_scroll_rect(Drawable_Context context, int x, int y, int width, in
  * @param height The height of the rectangle.
  * @param new_x The top left x coordinate of the new location.
  * @param new_y The top left y coordinate of the new location.
- * 
+ *
  * Copies a rectangle of size @p width, @p height at the (@p x, @p y) location
  * specified in the current image to a new location (@p new_x, @p new_y) in the same
- * image. 
+ * image.
  **/
 EAPI void
 drawable_image_copy_rect(Drawable_Context context, int x, int y, int width, int height, int new_x, int new_y)
@@ -2956,10 +2955,10 @@ drawable_free_color_range(void)
 
 /**
  * @param distance_away Distance from the previous color.
- * 
+ *
  * Adds the current color to the current color range at a @p distance_away
  * distance from the previous color in the range (if it's the first
- * color in the range this is irrelevant). 
+ * color in the range this is irrelevant).
  **/
 EAPI void
 drawable_add_color_to_color_range(int distance_away)
@@ -2978,11 +2977,11 @@ drawable_add_color_to_color_range(int distance_away)
  * @param width The width of the rectangle.
  * @param height The height of the rectangle.
  * @param angle Angle of gradient.
- * 
+ *
  * Fills a rectangle of width @p width and height @p height at the (@p x, @p y) location
  * specified in the current image with a linear gradient of the
  * current color range at an angle of @p angle degrees with 0 degrees
- * being vertical from top to bottom going clockwise from there. 
+ * being vertical from top to bottom going clockwise from there.
  **/
 EAPI void
 drawable_image_fill_color_range_rectangle(int x, int y, int width, int height,
@@ -3014,13 +3013,13 @@ drawable_image_fill_color_range_rectangle(int x, int y, int width, int height,
  * @param width The width of the rectangle.
  * @param height The height of the rectangle.
  * @param angle Angle of gradient.
- * 
+ *
  * Fills a rectangle of width @p width and height @p height at the (@p
  * x, @p y) location
  * specified in the current image with a linear gradient in HSVA color
  * space of the current color range at an angle of @p angle degrees with
  * 0 degrees being vertical from top to bottom going clockwise from
- * there. 
+ * there.
  **/
 EAPI void
 drawable_image_fill_hsva_color_range_rectangle(int x, int y, int width, int height,
@@ -3051,9 +3050,9 @@ drawable_image_fill_hsva_color_range_rectangle(int x, int y, int width, int heig
  * @param x The x coordinate of the pixel.
  * @param y The y coordinate of the pixel.
  * @param color_return The returned color.
- * 
+ *
  * Fills the @p color_return color structure with the color of the pixel
- * in the current image that is at the (@p x, @p y) location specified. 
+ * in the current image that is at the (@p x, @p y) location specified.
  **/
 EAPI void
 drawable_image_query_pixel(Drawable_Context context, int x, int y, Drawable_Color * color_return)
@@ -3091,9 +3090,9 @@ drawable_image_query_pixel(Drawable_Context context, int x, int y, Drawable_Colo
  * @param saturation The returned saturation channel.
  * @param value The returned value channel.
  * @param alpha The returned alpha channel.
- * 
+ *
  * Gets the HSVA color of the pixel from the current image that is at
- * the (@p x, @p y) location specified. 
+ * the (@p x, @p y) location specified.
  **/
 EAPI void
 drawable_image_query_pixel_hsva(Drawable_Context context, int x, int y, float *hue, float *saturation,
@@ -3134,9 +3133,9 @@ drawable_image_query_pixel_hsva(Drawable_Context context, int x, int y, float *h
  * @param lightness The returned lightness channel.
  * @param saturation The returned saturation channel.
  * @param alpha The returned alpha channel.
- * 
+ *
  * Gets the HLSA color of the pixel from the current image that is at
- * the (@p x, @p y) location specified. 
+ * the (@p x, @p y) location specified.
  **/
 EAPI void
 drawable_image_query_pixel_hlsa(Drawable_Context context, int x, int y, float *hue, float *lightness,
@@ -3177,9 +3176,9 @@ drawable_image_query_pixel_hlsa(Drawable_Context context, int x, int y, float *h
  * @param magenta The returned magenta channel.
  * @param yellow The returned yellow channel.
  * @param alpha The returned alpha channel.
- * 
+ *
  * Gets the CMYA color of the pixel from the current image that is at
- * the (@p x, @p y) location specified. 
+ * the (@p x, @p y) location specified.
  *
  **/
 EAPI void
@@ -3225,10 +3224,10 @@ drawable_polygon_new(void)
  * @param poly A polygon
  * @param x The X coordinate.
  * @param y The Y coordinate.
- * 
+ *
  * Adds the point (@p x, @p y) to the polygon @p poly. The point will be added
  * to the end of the polygon's internal point list. The points are
- * drawn in order, from the first to the last. 
+ * drawn in order, from the first to the last.
  **/
 EAPI void
 drawable_polygon_add_point(DrawablePolygon poly, int x, int y)
@@ -3239,7 +3238,7 @@ drawable_polygon_add_point(DrawablePolygon poly, int x, int y)
 
 /**
  * @param poly A polygon.
- * 
+ *
  * Frees a polygon object.
  **/
 EAPI void
@@ -3252,11 +3251,11 @@ drawable_polygon_free(DrawablePolygon poly)
 /**
  * @param poly A polygon.
  * @param closed Closed polygon flag.
- * 
+ *
  * Draws the polygon @p poly onto the current context image. Points which have
  * been added to the polygon are drawn in sequence, first to last. The
  * final point will be joined with the first point if @p closed is
- * non-zero. 
+ * non-zero.
  **/
 EAPI void
 drawable_image_draw_polygon(Drawable_Context context, DrawablePolygon poly, unsigned char closed)
@@ -3284,9 +3283,9 @@ drawable_image_draw_polygon(Drawable_Context context, DrawablePolygon poly, unsi
 
 /**
  * @param poly A polygon.
- * 
+ *
  * Fills the area defined by the polygon @p polyon the current context image
- * with the current context color. 
+ * with the current context color.
  **/
 EAPI void
 drawable_image_fill_polygon(Drawable_Context context, DrawablePolygon poly)
@@ -3318,10 +3317,10 @@ drawable_image_fill_polygon(Drawable_Context context, DrawablePolygon poly)
  * @param py1 Y coordinate of the upper left corner.
  * @param px2 X coordinate of the lower right corner.
  * @param py2 Y coordinate of the lower right corner.
- * 
+ *
  * Calculates the bounding area of the polygon @p poly. (@p px1, @p py1) defines the
  * upper left corner of the bounding box and (@p px2, @p py2) defines it's
- * lower right corner. 
+ * lower right corner.
  **/
 EAPI void
 drawable_polygon_get_bounds(DrawablePolygon poly, int *px1, int *py1, int *px2,
@@ -3336,12 +3335,12 @@ drawable_polygon_get_bounds(DrawablePolygon poly, int *px1, int *py1, int *px2,
  * @param yc Y coordinate of the center of the ellipse.
  * @param a The horizontal amplitude of the ellipse.
  * @param b The vertical amplitude of the ellipse.
- * 
+ *
  * Draws an ellipse on the current context image. The ellipse is
  * defined as (@p x-@p xc)^2/@p a^2 + (@p y-@p yc)^2/@p b^2 = 1. This means that the
  * point (@p xc, @p yc) marks the center of the ellipse, @p a defines the
  * horizontal amplitude of the ellipse, and @p b defines the vertical
- * amplitude. 
+ * amplitude.
  **/
 EAPI void
 drawable_image_draw_ellipse(Drawable_Context context, int xc, int yc, int a, int b)
@@ -3372,13 +3371,13 @@ drawable_image_draw_ellipse(Drawable_Context context, int xc, int yc, int a, int
  * @param yc Y coordinate of the center of the ellipse.
  * @param a The horizontal amplitude of the ellipse.
  * @param b The vertical amplitude of the ellipse.
- * 
+ *
  * Fills an ellipse on the current context image using the current
- * context color. The ellipse is 
+ * context color. The ellipse is
  * defined as (@p x-@p xc)^2/@p a^2 + (@p y-@p yc)^2/@p b^2 = 1. This means that the
  * point (@p xc, @p yc) marks the center of the ellipse, @p a defines the
  * horizontal amplitude of the ellipse, and @p b defines the vertical
- * amplitude. 
+ * amplitude.
  **/
 EAPI void
 drawable_image_fill_ellipse(Drawable_Context context, int xc, int yc, int a, int b)
@@ -3408,7 +3407,7 @@ drawable_image_fill_ellipse(Drawable_Context context, int xc, int yc, int a, int
  * @param poly A polygon
  * @param x The X coordinate.
  * @param y The Y coordinate.
- * 
+ *
  * Returns non-zero if the point (@p x, @p y) is within the area defined by
  * the polygon @p poly.
  **/

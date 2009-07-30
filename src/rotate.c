@@ -342,7 +342,6 @@ __drawable_BlendImageToImageSkewed(DrawableImage * im_src, DrawableImage * im_ds
    int                 x, y, dxh, dyh, dxv, dyv, i;
    double              xy2;
    DATA32             *data, *src;
-   int                 do_mmx;
 
    if ((ssw < 0) || (ssh < 0))
       return;
@@ -357,7 +356,7 @@ __drawable_BlendImageToImageSkewed(DrawableImage * im_src, DrawableImage * im_ds
       return;
 
    /*\ Complicated gonio.  Works on paper..
-    * |*| Too bad it doesn't all fit into integer math.. 
+    * |*| Too bad it doesn't all fit into integer math..
     * \ */
    if (vsx | vsy)
      {

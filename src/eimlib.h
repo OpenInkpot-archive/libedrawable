@@ -223,7 +223,6 @@ extern "C"
    EAPI void drawable_image_tile(void);
 #endif
 /* fonts and text */
-   EAPI Drawable_Font   *drawable_font_load(const char *name, int faceidx, int size);
    EAPI void drawable_load_font(Drawable_Context context, const char *font_name, int face, int size);
    EAPI void drawable_free_font(Drawable_Font font);
 #if 0
@@ -242,7 +241,7 @@ extern "C"
                                                  int *vertical_advance_return);
    EAPI void drawable_get_text_size(Drawable_Context context, const char *text, int *width_return,
                                  int *height_return);
-   EAPI void drawable_get_text_advance(Drawable_Context context, const char *text, 
+   EAPI void drawable_get_text_advance(Drawable_Context context, const char *text,
 			       int *horizontal_advance_return,
 			       int *vertical_advance_return);
    EAPI int drawable_get_text_inset(Drawable_Context context, const char *text);
