@@ -43,6 +43,8 @@ _edrawable_init(Evas_Object *obj, Evas *evas, int w, int h) {
     evas_object_smart_member_add(drawable->clip, obj);
 
     drawable->image = evas_object_image_add(evas);
+    evas_object_smart_member_add(drawable->image, obj);
+
     evas_object_pass_events_set(drawable->image, TRUE);
     evas_object_image_size_set(drawable->image, w, h);
     evas_object_image_fill_set(drawable->image, 0, 0, w, h);
@@ -62,6 +64,14 @@ _edrawable_init(Evas_Object *obj, Evas *evas, int w, int h) {
 }
 
 static void
+_edrawable_display(Evas_Object *obj, int x, int y, int w, int h) {
+    EDrawable *drawable = evas_object_smart_data_get(obj);
+    evas_object_move(drawable->clip, x, y);
+    evas_object_resize(drawable->clip, w, h);
+
+}
+
+static void
 _edrawable_show(Evas_Object *obj) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
     evas_object_show(drawable->clip);
@@ -77,15 +87,19 @@ _edrawable_hide(Evas_Object *obj) {
 
 static void
 _edrawable_move(Evas_Object *obj, Evas_Coord x, Evas_Coord y) {
-    EDrawable *drawable = evas_object_smart_data_get(obj);
-    evas_object_move(drawable->clip, x, y);
-    evas_object_move(drawable->image, x, y);
+    //EDrawable *drawable = evas_object_smart_data_get(obj);
+    int ow, oh;
+    evas_object_geometry_get(obj, NULL, NULL, &ow, &oh);
+
+    _edrawable_display(obj, x, y, ow, oh);
 }
 
 
 static void
-_edrawable_resize(Evas_Object *obj, Evas_Coord x, Evas_Coord y) {
-    printf("Resize called\n");
+_edrawable_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h) {
+    int ox, oy;
+    evas_object_geometry_get(obj, &ox, &oy, NULL, NULL);
+    _edrawable_display(obj, ox, oy, w, h);
 }
 
 static void
@@ -271,13 +285,14 @@ void
 edrawable_commit(Evas_Object *obj) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
  //   void *in;
-//    int w, h;
+    int w, h;
 
-//    w = drawable_image_get_width(e->context);
-//    h = drawable_image_get_height(e->context);
+    w = drawable_image_get_width(drawable->context);
+    h = drawable_image_get_height(drawable->context);
     __drawable_PropagateUpdates(drawable->updates, drawable->image);
     drawable->updates=NULL;
-//    evas_object_image_data_update_add(img->image, 0, 0, w, h);
+    evas_object_image_data_update_add(drawable->image, 0, 0, w, h);
+    evas_object_image_pixels_dirty_set(drawable->image, 1);
 }
 
 void
