@@ -1,3 +1,9 @@
+edrawable (0.1+20090518-2) asimov; urgency=low
+
+  * Rebuild with new EWL
+
+ -- Alexander V. Nikolaev <avn@daemon.hole.ru>  Tue, 18 Aug 2009 01:11:27 +0300
+
 edrawable (0.1+20090518-1) asimov; urgency=low
 
   * Inirial version
