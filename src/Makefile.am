@@ -13,4 +13,4 @@ include_HEADERS = \
 
 noinst_PROGRAMS = drt
 drt_SOURCES = drt.c
-drt_LDADD = libedrawable.la -levas -lecore -lecore_x -lfreetype -lecore_evas
+drt_LDADD = libedrawable.la @FREETYPE_LIBS@ @EVAS_LIBS@ @ECORE_FILE_LIBS@ @ECORE_EVAS_LIBS@ @ECORE_X_LIBS@

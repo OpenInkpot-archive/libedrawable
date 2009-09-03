@@ -10,5 +10,7 @@ PKG_CHECK_MODULES(FREETYPE,[freetype2])
 PKG_CHECK_MODULES(EVAS,[evas])
 PKG_CHECK_MODULES(ECORE,[ecore])
 PKG_CHECK_MODULES(ECORE_FILE,[ecore-file])
+PKG_CHECK_MODULES(ECORE_EVAS,[ecore-evas])
+PKG_CHECK_MODULES(ECORE_X,[ecore-x])
 
 AC_OUTPUT(Makefile libedrawable.pc src/Makefile)
