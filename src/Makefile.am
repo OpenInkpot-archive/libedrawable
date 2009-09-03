@@ -10,3 +10,7 @@ libedrawable_la_LIBS = @FREETYPE_LIBS@ @EVAS_LIBS@ @ECORE_FILE_LIBS@
 include_HEADERS = \
     edrawable.h \
     eimlib.h 
+
+noinst_PROGRAMS = drt
+drt_SOURCES = drt.c
+drt_LDADD = libedrawable.la -levas -lecore -lecore_x -lfreetype -lecore_evas
