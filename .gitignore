@@ -7,7 +7,6 @@ config.sub
 configure
 depcomp
 .deps
-echoicebox.pc
 install-sh
 *.la
 .libs
@@ -21,4 +20,6 @@ missing
 *~
 tags
 po/*.mo
-
+src/drt
+debian/stamp-*
+libedrawable.pc
