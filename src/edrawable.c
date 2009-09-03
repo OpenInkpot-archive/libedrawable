@@ -47,11 +47,11 @@ _edrawable_init(Evas_Object *obj, Evas *evas, int w, int h) {
     drawable->context = drawable_context_new();
 
     void * data = evas_object_image_data_get(drawable->image, 1);
+
     printf("Create image: %d x %d\n", w, h);
     Drawable_Image di = drawable_create_image_using_data(w, h, data);
     drawable_context_set_image(drawable->context, di);
     drawable_image_set_alpha(drawable->context, 1);
-
 }
 
 static void
@@ -274,7 +274,6 @@ edrawable_get_font_descent(Evas_Object *obj) {
 void
 edrawable_commit(Evas_Object *obj) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
- //   void *in;
     int w, h;
 
     w = drawable_image_get_width(drawable->context);
