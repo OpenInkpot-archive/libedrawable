@@ -40,7 +40,6 @@ _edrawable_init(Evas_Object *obj, Evas *evas, int w, int h) {
     drawable->image = evas_object_image_add(evas);
     evas_object_smart_member_add(drawable->image, obj);
 
-    evas_object_pass_events_set(drawable->image, TRUE);
     evas_object_image_size_set(drawable->image, w, h);
     evas_object_image_fill_set(drawable->image, 0, 0, w, h);
 
@@ -282,8 +281,6 @@ edrawable_commit(Evas_Object *obj) {
     h = drawable_image_get_height(drawable->context);
     __drawable_PropagateUpdates(drawable->updates, drawable->image);
     drawable->updates=NULL;
-    evas_object_image_data_update_add(drawable->image, 0, 0, w, h);
-    evas_object_image_pixels_dirty_set(drawable->image, 1);
 }
 
 void
