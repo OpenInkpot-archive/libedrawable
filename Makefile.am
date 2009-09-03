@@ -2,5 +2,5 @@ AUTOMAKE_OPTIONS = foreign
 SUBDIRS = src
 
 pkgconfigdir = $(libdir)/pkgconfig
-pkgconfig_DATA = edrawable.pc
+pkgconfig_DATA = libedrawable.pc
 

@@ -11,4 +11,4 @@ PKG_CHECK_MODULES(EVAS,[evas])
 PKG_CHECK_MODULES(ECORE,[ecore])
 PKG_CHECK_MODULES(ECORE_FILE,[ecore-file])
 
-AC_OUTPUT(Makefile edrawable.pc src/Makefile)
+AC_OUTPUT(Makefile libedrawable.pc src/Makefile)

@@ -1,3 +1,9 @@
+libedrawable (0.2-1) asimov; urgency=low
+
+  * De-EWLize
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 03 Sep 2009 22:43:52 +0700
+
 edrawable (0.1+20090518-2) asimov; urgency=low
 
   * Bump revision for signing
