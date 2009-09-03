@@ -5,7 +5,6 @@
 #include "eimlib.h"
 
 struct _EDrawable {
-    Evas_Object      *clip;
     Evas_Object      *image;
     Drawable_Context  context;
     Drawable_Updates  updates;

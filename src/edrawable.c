@@ -22,8 +22,6 @@ _edrawable_del(Evas_Object *obj) {
     if(drawable) {
         if(drawable->context)
             drawable_context_free(drawable->context);
-        if(drawable->clip)
-            evas_object_del(drawable->clip);
         if(drawable->updates)
             __drawable_FreeUpdates(drawable->updates);
         free(drawable);
@@ -39,18 +37,12 @@ _edrawable_init(Evas_Object *obj, Evas *evas, int w, int h) {
         return;
     }
 
-    drawable->clip = evas_object_rectangle_add(evas);
-    evas_object_smart_member_add(drawable->clip, obj);
-
     drawable->image = evas_object_image_add(evas);
     evas_object_smart_member_add(drawable->image, obj);
 
     evas_object_pass_events_set(drawable->image, TRUE);
     evas_object_image_size_set(drawable->image, w, h);
     evas_object_image_fill_set(drawable->image, 0, 0, w, h);
-
-    evas_object_stack_above(drawable->image, drawable->clip);
-    evas_object_clip_set(drawable->image, drawable->clip);
 
     drawable->updates = NULL;
     drawable->context = drawable_context_new();
@@ -66,22 +58,21 @@ _edrawable_init(Evas_Object *obj, Evas *evas, int w, int h) {
 static void
 _edrawable_display(Evas_Object *obj, int x, int y, int w, int h) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
-    evas_object_move(drawable->clip, x, y);
-    evas_object_resize(drawable->clip, w, h);
-
+    int iw, ih;
+    evas_object_image_size_get(drawable->image, &iw, &ih);
+    evas_object_move(drawable->image, x, y);
+    evas_object_resize(drawable->image, MIN(w, iw), MIN(h, ih));
 }
 
 static void
 _edrawable_show(Evas_Object *obj) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
-    evas_object_show(drawable->clip);
     evas_object_show(drawable->image);
 }
 
 static void
 _edrawable_hide(Evas_Object *obj) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
-    evas_object_hide(drawable->clip);
     evas_object_hide(drawable->image);
 }
 
@@ -105,13 +96,13 @@ _edrawable_resize(Evas_Object *obj, Evas_Coord w, Evas_Coord h) {
 static void
 _edrawable_clip_set(Evas_Object *obj, Evas_Object *clip) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
-    evas_object_clip_set(drawable->clip, clip);
+    evas_object_clip_set(drawable->image, clip);
 }
 
 static void
 _edrawable_clip_unset(Evas_Object *obj) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
-    evas_object_clip_unset(drawable->clip);
+    evas_object_clip_unset(drawable->image);
 }
 
 static Evas_Smart * _edrawable_smart_get() {
