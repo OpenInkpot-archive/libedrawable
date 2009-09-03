@@ -1,7 +1,6 @@
-AC_INIT(configure.ac)
-
-AM_CONFIG_HEADER(config.h)
-AM_INIT_AUTOMAKE(edrawable, 0.2)
+AC_PREREQ(2.57)
+AC_INIT(edrawable, 0.2, avn@daemon.hole.ru)
+AM_INIT_AUTOMAKE(foreign)
 
 AC_LANG_C
 AC_PROG_CC
