@@ -7,7 +7,7 @@ XCS-Cross-Build-Depends: libevas-dev, libecore-dev, libfreetype6-dev
 Priority: optional
 Standards-Version: 3.8.0
 
-Package: libedrawable0
+Package: libedrawable1
 Priority: optional
 Architecture: any
 Depends: ${shlibs:Depends}
@@ -18,7 +18,7 @@ Package: libedrawable-dev
 Section: libdevel
 Priority: optional
 Architecture: any
-Depends: libedrawable0 (= ${binary:Version}), libevas-dev, libecore-dev
+Depends: libedrawable1 (= ${binary:Version}), libevas-dev, libecore-dev
 Description: Hacked version of imlib2 -- development files
  Provide drawable canvas with primitives for Evas
  .
