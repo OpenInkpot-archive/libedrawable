@@ -1,4 +1,3 @@
-#include "config.h"
 #include "common.h"
 #include "colormod.h"
 #include "image.h"

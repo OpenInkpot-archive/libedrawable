@@ -1,12 +1,9 @@
 #ifndef __COMMON
 #define __COMMON 1
 
-#include "config.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include <config.h>
 #include <string.h>
 #include <math.h>
 #ifdef WITH_DMALLOC
