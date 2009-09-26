@@ -1,3 +1,9 @@
+libedrawable (0.2-2) asimov; urgency=low
+
+  * Rollback small part of last change: it break epuzzles
+
+ -- Alexander V. Nikolaev <avn@daemon.hole.ru>  Sat, 26 Sep 2009 19:48:06 +0300
+
 libedrawable (0.2-1) asimov; urgency=low
 
   * De-EWLize
