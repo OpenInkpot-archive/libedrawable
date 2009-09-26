@@ -304,6 +304,7 @@ edrawable_commit(Evas_Object *obj) {
     h = drawable_image_get_height(drawable->context);
     __drawable_PropagateUpdates(drawable->updates, drawable->image);
     drawable->updates=NULL;
+    evas_object_image_pixels_dirty_set(drawable->image, 1);
 }
 
 void
