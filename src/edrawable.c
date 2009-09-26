@@ -137,6 +137,30 @@ edrawable_add(Evas *evas, int w, int h) {
     return obj;
 }
 
+void
+edrawable_image_file_set(Evas_Object *obj, const char *file, const char *key) {
+    EDrawable *drawable  = evas_object_smart_data_get(obj);
+    if(!drawable)
+        return;
+    evas_object_image_file_set(drawable->image, file, key);
+}
+
+Evas_Object *
+edrawable_load(Evas *evas, const char *file, const char *key) {
+    int w, h;
+    Evas_Object *obj = NULL;
+    Evas_Imaging_Image *im = evas_imaging_image_load(file, key);
+    if(im) {
+        printf("Can't load %s\n", file);
+        return NULL;
+    }
+    evas_imaging_image_size_get(im, &w, &h);
+    obj = edrawable_add(evas, w, h);
+    if(obj)
+        edrawable_image_file_set(obj, file, key);
+    evas_imaging_image_free(im);
+    return obj;
+}
 
 void
 edrawable_draw_line(Evas_Object *obj, int x1, int y1, int x2, int y2) {

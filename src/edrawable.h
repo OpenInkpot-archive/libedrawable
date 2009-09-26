@@ -17,6 +17,12 @@ typedef void * EDrawablePolygon;
 extern Evas_Object *
 edrawable_add(Evas *, int w, int h);
 
+void
+edrawable_image_file_set(Evas_Object *, const char *file, const char *key);
+
+extern Evas_Object *
+edrawable_load(Evas *evas, const char *file, const char *key);
+
 extern void
 edrawable_draw_line(Evas_Object *, int x1, int y1, int x2, int y2);
 
