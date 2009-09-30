@@ -494,7 +494,6 @@ EAPI void
 drawable_context_set_color(Drawable_Context context, int red, int green, int blue, int alpha)
 {
    DrawableContext *ctx = (DrawableContext *) context;
-   printf("set color: %d %d %d %d\n",red,green,blue,alpha);
    ctx->color.red = red;
    ctx->color.green = green;
    ctx->color.blue = blue;
