@@ -1,3 +1,9 @@
+libedrawable (0.2.3+b1) zelazny; urgency=low
+
+  * Rebuild due to updated EFL
+
+ -- Mikhail Gusarov <dottedmag@dottedmag.net>  Thu, 14 Jan 2010 12:05:57 +0600
+
 libedrawable (0.2-3) asimov; urgency=low
 
   * Remove debug line cause excessive noise in madaudio
