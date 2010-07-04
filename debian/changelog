@@ -1,3 +1,9 @@
+libedrawable (0.2.3+b2) zelazny; urgency=low
+
+  * Rebuild due to updated EFL
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Sun, 04 Jul 2010 23:34:04 +0200
+
 libedrawable (0.2.3+b1) zelazny; urgency=low
 
   * Rebuild due to updated EFL
