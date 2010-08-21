@@ -42,14 +42,14 @@ _edrawable_init(Evas_Object *obj, Evas *evas, int w, int h) {
 
     evas_object_image_size_set(drawable->image, w, h);
     evas_object_image_fill_set(drawable->image, 0, 0, w, h);
+    evas_object_image_alpha_set(drawable->image, 1);
 
     drawable->updates = NULL;
     drawable->context = drawable_context_new();
 
-    void * data = evas_object_image_data_get(drawable->image, 1);
 
     printf("Create image: %d x %d\n", w, h);
-    Drawable_Image di = drawable_create_image_using_data(w, h, data);
+    Drawable_Image di = drawable_create_image(w, h);
     drawable_context_set_image(drawable->context, di);
     drawable_image_set_alpha(drawable->context, 1);
 }
@@ -299,12 +299,44 @@ edrawable_get_font_descent(Evas_Object *obj) {
 void
 edrawable_commit(Evas_Object *obj) {
     EDrawable *drawable = evas_object_smart_data_get(obj);
-    int w, h;
+    int w, h, i, j;
 
     w = drawable_image_get_width(drawable->context);
     h = drawable_image_get_height(drawable->context);
     __drawable_PropagateUpdates(drawable->updates, drawable->image);
     drawable->updates=NULL;
+
+    unsigned int stride = evas_object_image_stride_get(drawable->image);
+    unsigned char *dst = evas_object_image_data_get(drawable->image, 1);
+    unsigned char *alpha = dst + stride * h;
+    unsigned int *src = drawable_image_get_data(drawable->context);
+
+#define A_VAL(p) ((DATA8 *)(p))[3]
+#define R_VAL(p) ((DATA8 *)(p))[2]
+#define G_VAL(p) ((DATA8 *)(p))[1]
+#define B_VAL(p) ((DATA8 *)(p))[0]
+
+#define GRY_8_FROM_COMPONENTS(r, g, b)	\
+     (((218 * (r)) +	\
+       (732 * (g)) +	\
+       (74  * (b))) >> 10)
+
+#define GRY_8_FROM_RGB(rgb) \
+     GRY_8_FROM_COMPONENTS(R_VAL(rgb), G_VAL(rgb), B_VAL(rgb))
+
+    for(j = 0; j < h; j++) {
+        for(i = 0; i < w; i++) {
+            *dst = GRY_8_FROM_RGB(src);
+            *alpha = A_VAL(src);
+
+            dst++;
+            alpha++;
+            src++;
+        }
+        dst += (stride - w);
+        alpha += (stride - w);
+    }
+
     evas_object_image_pixels_dirty_set(drawable->image, 1);
 }
 
