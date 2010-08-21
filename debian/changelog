@@ -1,3 +1,9 @@
+libedrawable (0.2.4) zelazny; urgency=low
+
+  * Use 8bpp engine
+
+ -- Alexander Kerner <lunohod@openinkpot.org>  Sat, 21 Aug 2010 16:14:40 +0200
+
 libedrawable (0.2.3+b2) zelazny; urgency=low
 
   * Rebuild due to updated EFL
